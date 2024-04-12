@@ -4,7 +4,7 @@ import com.co.unitravel.domain.models.enums.AirplaneStatus
 
 data class Airplane (
 
-    var id: Int? = null,
+    var id: Long? = null,
 
     var model:String? = null,
 
