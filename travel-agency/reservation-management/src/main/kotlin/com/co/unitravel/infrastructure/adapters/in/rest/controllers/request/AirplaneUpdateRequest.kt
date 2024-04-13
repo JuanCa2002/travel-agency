@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull
 
 data class AirplaneUpdateRequest(
 
-    @NotNull
-    var id: Long = 0,
+    @field:NotNull
+    val id: Long?,
 
     var model:String? = null,
 

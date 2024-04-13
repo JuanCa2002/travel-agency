@@ -1,5 +1,7 @@
 package com.co.unitravel.application.usecases
 
+import com.co.unitravel.application.exceptions.airplane.AirplaneBusinessException
+import com.co.unitravel.application.exceptions.airplane.AirplaneErrorCodes
 import com.co.unitravel.domain.models.Airplane
 import com.co.unitravel.domain.models.enums.AirplaneStatus
 import com.co.unitravel.domain.models.records.PageModel
@@ -15,7 +17,10 @@ import org.springframework.transaction.annotation.Propagation
 open class AirplaneUseCaseImpl( private val airplanePort: AirplanePort): AirplaneUseCase {
 
     @Transactional(propagation = Propagation.REQUIRED)
-    override fun create(airplane: Airplane): Airplane {
+    override fun create(airplane: Airplane): Airplane{
+        val error = AirplaneBusinessException()
+        error.addError(AirplaneErrorCodes.AIRPLANE_EXCEEDED_SEATS, null);
+        if(airplane.numberSeats!! > 200) throw error
         airplane.id = null;
         airplane.status = AirplaneStatus.DISPONIBLE;
         return airplanePort.save(airplane);

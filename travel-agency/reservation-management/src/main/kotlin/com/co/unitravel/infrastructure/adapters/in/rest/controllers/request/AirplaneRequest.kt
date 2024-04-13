@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotNull
 
 data class AirplaneRequest (
 
-    @NotNull
-    var model:String? = null,
+    @field:NotNull
+    val model:String,
 
-    @NotNull
-    var numberSeats:Int? = null
+    @field:NotNull
+    val numberSeats:Int?
 )

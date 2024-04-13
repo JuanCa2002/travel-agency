@@ -1,5 +1,6 @@
 package com.co.unitravel.infrastructure.adapters.in.rest.controllers;
 
+import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.infrastructure.adapters.in.rest.configuration.DepartmentApi;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.DepartmentRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.DepartmentResponse;
@@ -26,7 +27,7 @@ public class DepartmentController implements DepartmentApi {
 
     @PostMapping
     @Override
-    public ResponseEntity<DepartmentResponse> save(DepartmentRequest departmentRequest) {
+    public ResponseEntity<DepartmentResponse> save(DepartmentRequest departmentRequest) throws BusinessException {
         var result = departmentUseCase.create(departmentMapperApi.requestToDomain(departmentRequest));
         return new ResponseEntity<>(departmentMapperApi.domainToResponse(result), HttpStatus.CREATED);
     }
