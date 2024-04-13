@@ -1,6 +1,8 @@
 package com.co.unitravel.infrastructure.adapters.out.database.implementation;
 
 
+import com.co.unitravel.application.exceptions.department.DepartmentErrorCodes;
+import com.co.unitravel.application.exceptions.department.DepartmentNotFoundException;
 import com.co.unitravel.domain.models.Department;
 import com.co.unitravel.infrastructure.adapters.out.database.entities.DepartmentEntity;
 import com.co.unitravel.infrastructure.adapters.out.database.mappers.department.DepartmentMapper;
@@ -28,5 +30,17 @@ public class DepartmentAdapter implements DepartmentPort {
     @Override
     public List<Department> findAll() {
         return departmentMapper.entitiesToDomains(departmentRepository.findAll());
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return departmentRepository.existsByName(name);
+    }
+
+    @Override
+    public Department findById(Integer id) throws DepartmentNotFoundException {
+        DepartmentNotFoundException errorNotFound = new DepartmentNotFoundException();
+        errorNotFound.addError(DepartmentErrorCodes.DEPARTMENT_NOT_FOUND,new Object[]{id});
+        return departmentMapper.entityToDomain(departmentRepository.findById(id).orElseThrow(() -> errorNotFound));
     }
 }
