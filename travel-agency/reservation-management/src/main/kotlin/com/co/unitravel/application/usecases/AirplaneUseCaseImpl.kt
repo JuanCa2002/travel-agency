@@ -7,6 +7,7 @@ import com.co.unitravel.domain.models.enums.AirplaneStatus
 import com.co.unitravel.domain.models.records.PageModel
 import com.co.unitravel.infrastructure.ports.`in`.airplane.AirplaneUseCase
 import com.co.unitravel.infrastructure.ports.out.airplane.AirplanePort
+import com.co.unitravel.infrastructure.ports.out.client.`in`.CityInClientPort
 import org.springframework.transaction.annotation.Transactional
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service

@@ -1,5 +1,7 @@
 package com.co.unitravel.infrastructure.adapters.out.database.implementation;
 
+import com.co.unitravel.application.exceptions.city.CityErrorCodes;
+import com.co.unitravel.application.exceptions.city.CityNotFoundException;
 import com.co.unitravel.domain.models.City;
 import com.co.unitravel.infrastructure.adapters.out.database.entities.CityEntity;
 import com.co.unitravel.infrastructure.adapters.out.database.mappers.city.CityMapper;
@@ -20,5 +22,18 @@ public class CityAdapter implements CityPort {
     public City save(City city) {
         CityEntity savedCity = cityRepository.save(cityMapper.domainToEntity(city));
         return cityMapper.entityToDomain(savedCity);
+    }
+
+    @Override
+    public City findById(Long id) throws CityNotFoundException {
+        CityNotFoundException errorNotFound = new CityNotFoundException();
+        errorNotFound.addError(CityErrorCodes.CITY_NOT_FOUND,new Object[]{id});
+        return cityMapper.entityToDomain(cityRepository.findById(id).orElseThrow(()-> errorNotFound));
+    }
+
+    @Override
+    public boolean validate(Long id){
+        CityEntity city = cityRepository.findById(id).orElse(null);
+        return city!= null;
     }
 }

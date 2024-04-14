@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface CityApi {
@@ -17,4 +18,8 @@ public interface CityApi {
     @Operation(summary = "Create new city", description = "Add a new city", tags = {"city"})
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "New city added successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityResponse.class)))})
     ResponseEntity<CityResponse> save(@Valid @RequestBody CityRequest cityRequest) throws NotFoundException;
+
+    @Operation(summary = "Find a city by id", description = "Find a existing city by its id", tags = {"city"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found city", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CityResponse.class)))})
+    ResponseEntity<CityResponse> findById(@PathVariable Long id) throws NotFoundException;
 }

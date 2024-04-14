@@ -29,6 +29,8 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: rabbitmq
 
 eureka:
   instance:
