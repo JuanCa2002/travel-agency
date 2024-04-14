@@ -9,6 +9,8 @@ import com.co.unitravel.infrastructure.ports.in.city.CityUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +29,12 @@ public class CityController implements CityApi {
     public ResponseEntity<CityResponse> save(CityRequest cityRequest) throws NotFoundException {
         var response = cityUseCase.create(cityMapperApi.requestToDomain(cityRequest));
         return new ResponseEntity<>(cityMapperApi.domainToResponse(response), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    @Override
+    public ResponseEntity<CityResponse> findById(@PathVariable Long id) throws NotFoundException {
+        var response = cityUseCase.getById(id);
+        return new ResponseEntity<>(cityMapperApi.domainToResponse(response), HttpStatus.OK);
     }
 }

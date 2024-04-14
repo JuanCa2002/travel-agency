@@ -1,6 +1,7 @@
 package com.co.unitravel.application.usecases.city;
 
 import com.co.unitravel.application.exceptions.department.DepartmentNotFoundException;
+import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.domain.models.City;
 import com.co.unitravel.domain.models.Department;
 import com.co.unitravel.infrastructure.ports.in.city.CityUseCase;
@@ -27,6 +28,12 @@ public class CityUseCaseImpl implements CityUseCase {
         city.setName(city.getName().toUpperCase());
         city.setDepartment(department);
         return cityPort.save(city);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public City getById(Long id) throws NotFoundException {
+        return cityPort.findById(id);
     }
 
 }

@@ -33,7 +33,7 @@ public class CityEntity {
     @Column(name = "id", length = 10)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id", nullable = false)
     private DepartmentEntity department;
 
