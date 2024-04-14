@@ -45,3 +45,4 @@ request-mapping:
   controller:
     department: department
     city: city
+    destination: destination
