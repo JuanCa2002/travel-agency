@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CityMapper {
@@ -13,4 +15,6 @@ public interface CityMapper {
     City entityToDomain(CityEntity city);
 
     CityEntity domainToEntity(City city);
+
+    List<City> entitiesToDomains(List<CityEntity> entityList);
 }

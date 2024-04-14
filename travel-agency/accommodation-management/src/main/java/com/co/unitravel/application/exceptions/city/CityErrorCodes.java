@@ -7,4 +7,6 @@ public class CityErrorCodes {
     public static final String CITY_INVALID_TRANSACTION = "com.co.travel.application.exceptions.city.CityErrorCodes.CITY_INVALID_TRANSACTION";
 
     public static final String CITY_NOT_FOUND = "com.co.travel.application.exceptions.city.CityErrorCodes.CITY_NOT_FOUND";
+
+    public static final String CITY_NAME_ALREADY_EXISTS = "com.co.travel.application.exceptions.city.CityErrorCodes.CITY_NAME_ALREADY_EXISTS";
 }

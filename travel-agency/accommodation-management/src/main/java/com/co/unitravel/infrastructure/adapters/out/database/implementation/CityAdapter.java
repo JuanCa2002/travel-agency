@@ -10,6 +10,8 @@ import com.co.unitravel.infrastructure.ports.out.city.CityPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class CityAdapter implements CityPort {
@@ -32,8 +34,18 @@ public class CityAdapter implements CityPort {
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return cityRepository.existsByName(name);
+    }
+
+    @Override
     public boolean validate(Long id){
         CityEntity city = cityRepository.findById(id).orElse(null);
         return city!= null;
+    }
+
+    @Override
+    public List<City> findByDepartment(Integer departmentId) {
+        return cityMapper.entitiesToDomains(cityRepository.findByDepartment(departmentId));
     }
 }
