@@ -1,5 +1,6 @@
 package com.co.unitravel.application.usecases
 
+import com.co.unitravel.domain.models.Airplane
 import com.co.unitravel.domain.models.Seat
 import com.co.unitravel.domain.models.enums.SeatStatus
 import com.co.unitravel.infrastructure.ports.`in`.seat.SeatUseCase
@@ -26,5 +27,19 @@ open class SeatUseCaseImpl(private val seatPort: SeatPort, private val airplaneP
     @Transactional(propagation = Propagation.REQUIRED)
     override fun update(id: Long, seat: Seat): Seat {
         return seatPort.update(id, seat);
+    }
+
+    override fun getById(id: Long): Seat {
+        return seatPort.findById(id);
+    }
+
+    override fun updateStatus(id: Long, seatStatus: SeatStatus): Seat {
+        val seat = Seat()
+        seat.seatStatus = seatStatus
+        return seatPort.update(id, seat)
+    }
+
+    override fun getByAirplane(airplaneId: Long): List<Seat> {
+        return seatPort.findByAirplane(airplaneId);
     }
 }

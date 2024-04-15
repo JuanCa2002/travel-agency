@@ -1,5 +1,7 @@
 package com.co.unitravel.infrastructure.adapters.out.database.implementation
 
+import com.co.unitravel.application.exceptions.airplane.AirplaneErrorCodes
+import com.co.unitravel.application.exceptions.airplane.AirplaneNotFoundException
 import com.co.unitravel.application.exceptions.seat.SeatErrorCodes
 import com.co.unitravel.application.exceptions.seat.SeatNotFoundException
 import com.co.unitravel.domain.models.Seat
@@ -28,4 +30,18 @@ class SeatAdpater(private val seatMapper: SeatMapper,
         seatMapper.mergerToEntity(seatFound, seat);
         return seatMapper.entityToDomain(seatRepository.save(seatFound))
     }
+
+    override fun findById(id: Long): Seat {
+        val errorNotFound = SeatNotFoundException()
+        errorNotFound.addError(SeatErrorCodes.SEAT_NOT_FOUND, arrayOf(id))
+        return seatMapper.entityToDomain(seatRepository.findById(id).orElseThrow{errorNotFound});
+    }
+
+    override fun findByAirplane(airplaneId: Long): List<Seat> {
+        val errorNotFound = SeatNotFoundException()
+        errorNotFound.addError(SeatErrorCodes.SEAT_NOT_FOUND, arrayOf(airplaneId))
+        return seatMapper.entitiesToDomains(seatRepository.findByAirplane(airplaneId));
+    }
+
+
 }
