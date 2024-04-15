@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 0
   servlet:
     context-path: /api/v1/reservation-management
 
@@ -30,16 +30,16 @@ spring:
       ddl-auto: update
     database-platform: com.mysql.cj.jdbc.Driver
   rabbitmq:
-    host: localhost
+    host: rabbitmq
 
-#eureka:
-#  instance:
-#    instance-id: ${spring.application.name}:${random.value}
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 
 request-mapping:
   controller:

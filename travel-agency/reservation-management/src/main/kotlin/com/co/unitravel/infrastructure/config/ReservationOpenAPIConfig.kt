@@ -6,7 +6,7 @@ import io.swagger.v3.oas.models.servers.Server
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-const val SERVER_PORT = "8084"
+const val SERVER_PORT = "2208"
 
 @Configuration
 open class ReservationOpenAPIConfig {

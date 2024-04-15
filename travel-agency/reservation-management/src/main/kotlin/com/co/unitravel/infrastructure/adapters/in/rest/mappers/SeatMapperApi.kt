@@ -5,6 +5,7 @@ import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.Se
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.SeatUpdateRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.response.SeatResponse
 import org.mapstruct.Mapper
+import org.mapstruct.Mapping
 import org.mapstruct.NullValuePropertyMappingStrategy
 import org.mapstruct.ReportingPolicy
 
@@ -15,6 +16,7 @@ import org.mapstruct.ReportingPolicy
 )
 interface SeatMapperApi {
 
+    @Mapping(target = "airplane.id", source= "airplaneId")
     fun requestToDomain(seatRequest: SeatRequest): Seat;
 
     fun domainToResponse(seat: Seat): SeatResponse;

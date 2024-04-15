@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -24,6 +25,7 @@ open class SeatController(private val seatUseCase: SeatUseCase, private val seat
         return ResponseEntity(seatMapperApi.domainToResponse(result), HttpStatus.CREATED);
     }
 
+    @PutMapping
     override fun update(seatUpdateRequest: SeatUpdateRequest): ResponseEntity<SeatResponse> {
         val response = seatUseCase.update(seatUpdateRequest.id!!, seatMapperApi.updateRequestToDomain(seatUpdateRequest))
         return ResponseEntity(seatMapperApi.domainToResponse(response), HttpStatus.OK);
