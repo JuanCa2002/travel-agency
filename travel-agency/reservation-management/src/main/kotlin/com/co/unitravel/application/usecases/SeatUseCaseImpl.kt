@@ -29,16 +29,19 @@ open class SeatUseCaseImpl(private val seatPort: SeatPort, private val airplaneP
         return seatPort.update(id, seat);
     }
 
+    @Transactional(readOnly = true)
     override fun getById(id: Long): Seat {
         return seatPort.findById(id);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     override fun updateStatus(id: Long, seatStatus: SeatStatus): Seat {
         val seat = Seat()
         seat.seatStatus = seatStatus
         return seatPort.update(id, seat)
     }
 
+    @Transactional(readOnly = true)
     override fun getByAirplane(airplaneId: Long): List<Seat> {
         return seatPort.findByAirplane(airplaneId);
     }
