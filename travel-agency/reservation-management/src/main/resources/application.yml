@@ -44,3 +44,4 @@ eureka:
 request-mapping:
   controller:
     airplane: airplane
+    seat: seat
