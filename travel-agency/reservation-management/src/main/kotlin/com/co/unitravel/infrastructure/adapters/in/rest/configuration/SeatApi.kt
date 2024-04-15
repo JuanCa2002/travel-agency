@@ -49,9 +49,9 @@ interface SeatApi {
     )
     fun findById(@PathVariable id:Long):ResponseEntity<SeatResponse>
 
-    @Operation(summary = "Find cities by department", description = "Find a list of cities by department", tags = ["city"])
+    @Operation(summary = "Find seats by airplane", description = "Find a list of seats by airplane", tags = ["seat"])
     @ApiResponses(
-            value = [ApiResponse(responseCode = "200", description = "City list", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])]
+            value = [ApiResponse(responseCode = "200", description = "Seat list", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])]
     )
     fun findByAirplane(@PathVariable airplaneId: Long): ResponseEntity<List<SeatResponse>>
 
