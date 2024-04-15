@@ -9,12 +9,17 @@ import com.co.unitravel.infrastructure.adapters.out.database.entities.FlightEnti
 import com.co.unitravel.infrastructure.adapters.out.database.mappers.flight.FlightMapper
 import com.co.unitravel.infrastructure.adapters.out.database.repository.FlightRepository
 import com.co.unitravel.infrastructure.ports.out.flight.FlightPort
+import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Component
 import java.math.BigInteger
+import java.time.LocalDate
 import kotlin.math.ceil
 
+@Component
+@RequiredArgsConstructor
 class FlightAdapter(private val flightRepository: FlightRepository, private val flightMapper: FlightMapper): FlightPort {
 
     override fun save(flight: Flight): Flight {
@@ -33,13 +38,16 @@ class FlightAdapter(private val flightRepository: FlightRepository, private val 
     override fun findByCriteria(
         id: Long?,
         status: FlightStatus?,
+        initialCityId: Long?,
+        finalCityId:Long?,
+        departureTime: LocalDate?,
         rowsPerPage: Int,
         skip: Int
     ): PageModel<List<Flight>> {
         val pageNumber: Int = ceil(skip.toDouble() / rowsPerPage).toInt()
         val pageable: Pageable = PageRequest.of(pageNumber, rowsPerPage)
 
-        val page: Page<FlightEntity> = flightRepository.findByCriteria(id, status, pageable);
+        val page: Page<FlightEntity> = flightRepository.findByCriteria(id, status,initialCityId, finalCityId, departureTime, pageable);
         return PageModel(flightMapper.entitiesToDomains(page.content), BigInteger.valueOf(page.totalElements))
     }
 }

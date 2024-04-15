@@ -2,6 +2,7 @@ package com.co.unitravel.infrastructure.adapters.`in`.rest.configuration
 
 import com.co.unitravel.domain.models.enums.AirplaneStatus
 import com.co.unitravel.domain.models.enums.FlightStatus
+import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.filter.FlightFilterRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.FlightRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.FlightUpdateRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.SeatRequest
@@ -51,8 +52,7 @@ interface FlightApi {
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Paginated list", content = [Content(mediaType = "application/json", array = ArraySchema(schema = Schema(implementation = FlightResponse::class)))])
     )
-    fun findByCriteria(@RequestParam(name = "id", required = false) id:Long?,
-                       @RequestParam(name = "status", required = false) status: FlightStatus?,
+    fun findByCriteria( flightFilterRequest: FlightFilterRequest,
                        @RequestParam(name = "rowsPerPage", required = true, defaultValue = "10") rowsPerPage: Int,
                        @RequestParam(name = "skip", required = true, defaultValue = "0") skip:Int):ResponseEntity<PageResponse<List<FlightResponse>>>
 }

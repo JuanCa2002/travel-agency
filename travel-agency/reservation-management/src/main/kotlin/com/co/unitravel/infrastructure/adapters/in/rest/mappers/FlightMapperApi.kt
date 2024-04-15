@@ -1,6 +1,8 @@
 package com.co.unitravel.infrastructure.adapters.`in`.rest.mappers
 
 import com.co.unitravel.domain.models.Flight
+import com.co.unitravel.domain.models.filter.FlightFilterRq
+import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.filter.FlightFilterRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.FlightRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.FlightUpdateRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.response.FlightResponse
@@ -24,4 +26,6 @@ interface FlightMapperApi {
     fun domainsToResponses(flights: List<Flight>): List<FlightResponse>
 
     fun updateRequestToDomain(flightUpdateRequest: FlightUpdateRequest): Flight
+
+    fun filterRequestToRq(flightFilterRequest: FlightFilterRequest): FlightFilterRq
 }

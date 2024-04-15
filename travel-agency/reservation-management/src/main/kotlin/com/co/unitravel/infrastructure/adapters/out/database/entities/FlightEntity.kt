@@ -1,6 +1,7 @@
 package com.co.unitravel.infrastructure.adapters.out.database.entities
 
 import com.co.unitravel.domain.models.enums.FlightStatus
+import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.NoArgsConstructor
@@ -35,12 +36,14 @@ data class FlightEntity(
 
     //preguntarle a camilo acerca de estas 3
     @Column(name = "flight_time", nullable = false, length = 20)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     var flightTime: LocalTime? = null,
 
     @Column(name = "departure_time", nullable = false, length = 20)
     var departureTime: LocalDate? = null,
 
     @Column(name = "estimated_arrival_time", nullable = false, length = 20)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     var estimatedArrivalTime: LocalTime? = null,
     //------------------------------------------------------------------------
 
