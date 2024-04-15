@@ -45,3 +45,4 @@ request-mapping:
   controller:
     airplane: airplane
     seat: seat
+    flight: flight

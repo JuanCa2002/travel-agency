@@ -1,6 +1,5 @@
 package com.co.unitravel.infrastructure.adapters.out.database.entities
 
-import com.co.unitravel.domain.models.Airplane
 import com.co.unitravel.domain.models.enums.SeatClass
 import com.co.unitravel.domain.models.enums.SeatStatus
 import jakarta.persistence.*
