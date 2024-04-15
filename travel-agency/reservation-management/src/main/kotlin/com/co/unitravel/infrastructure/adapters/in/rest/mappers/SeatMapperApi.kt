@@ -23,6 +23,6 @@ interface SeatMapperApi {
 
     fun domainsToResponses(seats: List<Seat>): List<SeatResponse>
 
-    fun updateRequestToDomain(seatupdateRequest: SeatUpdateRequest): Seat
+    fun updateRequestToDomain(seatUpdateRequest: SeatUpdateRequest): Seat
 
 }
