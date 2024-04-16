@@ -18,4 +18,12 @@ interface FlightPort {
                        departureTime: LocalDate?,
                        rowsPerPage: Int,
                        skip: Int): PageModel<List<Flight>>
+
+    fun findById(id:Long): Flight
+
+    fun findAll(id: Long?,
+                status: FlightStatus?,
+                initialCityId: Long?,
+                finalCityId:Long?,
+                departureTime: LocalDate?):List<Flight>
 }

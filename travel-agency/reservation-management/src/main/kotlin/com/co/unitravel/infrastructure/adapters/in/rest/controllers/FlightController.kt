@@ -44,4 +44,22 @@ open class FlightController(private val flightUseCase: FlightUseCase, private va
 
         return ResponseEntity(pageResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    override fun findById(@PathVariable id: Long): ResponseEntity<FlightResponse> {
+        val result = flightUseCase.getById(id);
+        return ResponseEntity(flightMapperApi.domainToResponse(result), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    override fun updateStatus(@PathVariable id: Long, status: FlightStatus): ResponseEntity<FlightResponse> {
+        val response = flightUseCase.updateStatus(id, status);
+        return ResponseEntity(flightMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    override fun findAllCriteria(flightFilterRequest: FlightFilterRequest): ResponseEntity<List<FlightResponse>> {
+        val response = flightUseCase.findAll(flightMapperApi.filterRequestToRq(flightFilterRequest));
+        return ResponseEntity(flightMapperApi.domainsToResponses(response), HttpStatus.OK);
+    }
 }
