@@ -6,6 +6,7 @@ public class DestinationErrorCodes {
     public static final String DESTINATION_INVALID_TRANSACTION = "com.co.travel.application.exceptions.destination.DestinationErrorCodes.DESTINATION_INVALID_TRANSACTION";
     public static final String DESTINATION_NOT_FOUND = "com.co.travel.application.exceptions.destination.DestinationErrorCodes.DESTINATION_NOT_FOUND";
     public static final String DESTINATION_WITH_CITY_ALREADY_EXISTS= "com.co.travel.application.exceptions.destination.DestinationErrorCodes.DESTINATION_WITH_CITY_ALREADY_EXISTS";
+    public static final String DESTINATION_BY_CITY_NOT_FOUND = "com.co.travel.application.exceptions.destination.DestinationErrorCodes.DESTINATION_BY_CITY_NOT_FOUND";
 
 
 }
