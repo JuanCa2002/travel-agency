@@ -1,5 +1,7 @@
 package com.co.unitravel.infrastructure.adapters.out.database.implementation
 
+import com.co.unitravel.application.exceptions.airplane.AirplaneErrorCodes
+import com.co.unitravel.application.exceptions.airplane.AirplaneNotFoundException
 import com.co.unitravel.application.exceptions.flight.FlightErrorCodes
 import com.co.unitravel.application.exceptions.flight.FlightNotFoundException
 import com.co.unitravel.domain.models.Flight
@@ -49,5 +51,22 @@ class FlightAdapter(private val flightRepository: FlightRepository, private val 
 
         val page: Page<FlightEntity> = flightRepository.findByCriteria(id, status,initialCityId, finalCityId, departureTime, pageable);
         return PageModel(flightMapper.entitiesToDomains(page.content), BigInteger.valueOf(page.totalElements))
+    }
+
+    override fun findById(id: Long): Flight {
+        val errorNotFound = FlightNotFoundException()
+        errorNotFound.addError(FlightErrorCodes.FLIGHT_NOT_FOUND, arrayOf(id))
+        return flightMapper.entityToDomain(flightRepository.findById(id).orElseThrow{errorNotFound});
+    }
+
+    override fun findAll(
+        id: Long?,
+        status: FlightStatus?,
+        initialCityId: Long?,
+        finalCityId: Long?,
+        departureTime: LocalDate?
+    ): List<Flight> {
+        val response = flightRepository.findAllCriteria(id, status, initialCityId, finalCityId, departureTime)
+        return flightMapper.entitiesToDomains(response)
     }
 }

@@ -1,5 +1,6 @@
 package com.co.unitravel.application.usecases
 
+import com.co.unitravel.domain.models.Airplane
 import com.co.unitravel.domain.models.Flight
 import com.co.unitravel.domain.models.enums.FlightStatus
 import com.co.unitravel.domain.models.filter.FlightFilterRq
@@ -42,5 +43,26 @@ open class FlightUseCaseImpl(private val flightPort: FlightPort, private val air
                                          flightFilterRq.departureTime,
                                          rowsPerPage,
                                          skip)
+    }
+
+    @Transactional(readOnly = true)
+    override fun getById(id: Long): Flight {
+        return flightPort.findById(id)
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    override fun updateStatus(id: Long, flightStatus: FlightStatus): Flight {
+        val flight = Flight()
+        flight.flightStatus = flightStatus
+        return flightPort.update(id, flight)
+    }
+
+    @Transactional(readOnly = true)
+    override fun findAll(flightFilterRq: FlightFilterRq): List<Flight> {
+        return flightPort.findAll(flightFilterRq.id,
+                            flightFilterRq.status,
+                            flightFilterRq.initialCityId,
+                            flightFilterRq.finalCityId,
+                            flightFilterRq.departureTime)
     }
 }

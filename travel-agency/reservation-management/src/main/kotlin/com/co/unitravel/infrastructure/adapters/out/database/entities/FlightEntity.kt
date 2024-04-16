@@ -34,7 +34,6 @@ data class FlightEntity(
     @JoinColumn(name = "airplane_id", nullable = false)
     var airplane: AirplaneEntity? = AirplaneEntity(),
 
-    //preguntarle a camilo acerca de estas 3
     @Column(name = "flight_time", nullable = false, length = 20)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     var flightTime: LocalTime? = null,
@@ -45,7 +44,6 @@ data class FlightEntity(
     @Column(name = "estimated_arrival_time", nullable = false, length = 20)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     var estimatedArrivalTime: LocalTime? = null,
-    //------------------------------------------------------------------------
 
     @Column(name = "name", nullable = false, length = 20)
     var name: String? = null,
