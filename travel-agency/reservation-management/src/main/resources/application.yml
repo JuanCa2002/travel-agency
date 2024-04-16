@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8084
   servlet:
     context-path: /api/v1/reservation-management
 
@@ -46,3 +46,4 @@ request-mapping:
     airplane: airplane
     seat: seat
     flight: flight
+    reservation: reservation

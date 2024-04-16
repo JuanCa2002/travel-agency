@@ -1,6 +1,5 @@
 package com.co.unitravel.application.usecases
 
-import com.co.unitravel.domain.models.Airplane
 import com.co.unitravel.domain.models.Flight
 import com.co.unitravel.domain.models.enums.FlightStatus
 import com.co.unitravel.domain.models.filter.FlightFilterRq
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDate
 
 @Service
 @RequiredArgsConstructor

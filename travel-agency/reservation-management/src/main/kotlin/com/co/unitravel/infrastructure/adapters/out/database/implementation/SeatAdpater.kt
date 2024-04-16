@@ -43,5 +43,11 @@ class SeatAdpater(private val seatMapper: SeatMapper,
         return seatMapper.entitiesToDomains(seatRepository.findByAirplane(airplaneId));
     }
 
+    //override fun findByCustomer(customerId: Long): Seat {
+    //    val errorNotFound = SeatNotFoundException()
+    //    errorNotFound.addError(SeatErrorCodes.SEAT_NOT_FOUND, arrayOf(customerId))
+    //    return seatMapper.entityToDomain(seatRepository.findByCustomerId(customerId));
+    //}
+
 
 }

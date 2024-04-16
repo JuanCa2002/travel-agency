@@ -13,6 +13,6 @@ public interface CityRepository extends JpaRepository<CityEntity, Long> {
             "FROM CityEntity C WHERE C.name =:name")
     boolean existsByName(@Param("name") String name);
 
-    @Query("SELECT C FROM CityEntity C WHERE C.department.id =:departmentId")
-    List<CityEntity> findByDepartment(@Param("departmentId") Integer departmentId);
+    //@Query("SELECT C FROM CityEntity C WHERE C.department.id =:departmentId")
+    //List<CityEntity> findByDepartment(@Param("departmentId") Integer departmentId);
 }

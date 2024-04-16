@@ -45,4 +45,9 @@ open class SeatUseCaseImpl(private val seatPort: SeatPort, private val airplaneP
     override fun getByAirplane(airplaneId: Long): List<Seat> {
         return seatPort.findByAirplane(airplaneId);
     }
+
+    //@Transactional(readOnly = true)
+    //override fun getByCustomerId(customerId: Long): Seat {
+    //    return seatPort.findByCustomer((customerId))
+    //}
 }

@@ -47,4 +47,10 @@ open class SeatController(private val seatUseCase: SeatUseCase, private val seat
         return ResponseEntity(seatMapperApi.domainToResponse(response), HttpStatus.OK);
     }
 
+    //@GetMapping("/customer/{customerId}")
+    //override fun findByCustomer(@PathVariable customerId: Long): ResponseEntity<SeatResponse> {
+    //    val response = seatUseCase.getByCustomerId(customerId);
+    //    return ResponseEntity(seatMapperApi.domainToResponse(response), HttpStatus.OK);
+    //}
+
 }

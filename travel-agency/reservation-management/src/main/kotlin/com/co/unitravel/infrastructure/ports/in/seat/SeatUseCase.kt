@@ -15,5 +15,7 @@ interface SeatUseCase {
 
     fun getByAirplane(airplaneId: Long): List<Seat>
 
+    //fun getByCustomerId(customerId: Long): Seat
+
 
 }
