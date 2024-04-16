@@ -3,6 +3,7 @@ version: '3'
 volumes:
   mysql_database_accommodation:
   mysql_database_reservation:
+  mysql_database_user:
 
 services:
   mysql_database_accommodation:
@@ -18,6 +19,15 @@ services:
     image: mysql:8.0.34
     volumes:
       - mysql_database_reservation:/var/lib/mysql
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=root1234
+      - MYSQL_ROOT_PASSWORD=root1234
+
+  mysql_database_user:
+    image: mysql:8.0.34
+    volumes:
+      - mysql_database_user:/var/lib/mysql
     environment:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=root1234
@@ -69,6 +79,22 @@ services:
       - rabbitmq
     environment:
       spring.datasource.url: jdbc:mysql://mysql_database_reservation:3306/reservation?createDatabaseIfNotExist=true
+      spring.datasource.username: root
+      spring.datasource.password: root1234
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+    links:
+      - eureka-server
+
+  user:
+    image: travel_user
+    build: ./user-management
+    restart: always
+    depends_on:
+      - mysql_database_user
+      - eureka-server
+      - rabbitmq
+    environment:
+      spring.datasource.url: jdbc:mysql://mysql_database_reservation:3306/users?createDatabaseIfNotExist=true
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
