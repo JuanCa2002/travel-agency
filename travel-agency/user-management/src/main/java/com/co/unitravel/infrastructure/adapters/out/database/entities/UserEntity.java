@@ -29,7 +29,7 @@ import org.hibernate.annotations.DynamicUpdate;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CITY")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER")
     @Column(name = "id", length = 10)
     private Long id;
 

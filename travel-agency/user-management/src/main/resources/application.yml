@@ -44,3 +44,4 @@ eureka:
 request-mapping:
   controller:
     user: user
+    document-type: document-type
