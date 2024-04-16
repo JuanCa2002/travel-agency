@@ -46,3 +46,4 @@ request-mapping:
     airplane: airplane
     seat: seat
     flight: flight
+    reservation: reservation

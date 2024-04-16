@@ -9,4 +9,7 @@ interface SeatRepository: JpaRepository<SeatEntity, Long>  {
 
     @Query("SELECT S FROM SeatEntity S WHERE S.airplane.id = :airplaneId")
     fun findByAirplane(@Param("airplaneId") airplaneId: Long): List<SeatEntity>
+
+    //@Query("SELECT S FROM SeatEntity S WHERE S.customerId = :customerId")
+    //fun findByCustomerId(@Param("customerId") customerId:Long): SeatEntity
 }

@@ -64,4 +64,14 @@ interface SeatApi {
             ApiResponse(responseCode = "200", description = "Airplane status updated", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
     )
     fun updateStatus(@PathVariable id:Long, @RequestParam status: SeatStatus):ResponseEntity<SeatResponse>
+
+    //@Operation(
+    //    summary = "Find a seat by Customer",
+    //    description = "Find an existing seat by its Customer",
+    //    tags = ["seat"]
+    //)
+    //@ApiResponses(
+    //    ApiResponse(responseCode = "200", description = "Found Customer", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
+    //)
+    //fun findByCustomer(@PathVariable customerId: Long): ResponseEntity<SeatResponse>
 }
