@@ -20,6 +20,8 @@ public class UserResponse {
 
     private String phoneNumber;
 
+    private DocumentTypeResponse documentType;
+
     private Long cityId;
 
     private UserStatus status;

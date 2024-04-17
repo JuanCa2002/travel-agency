@@ -23,4 +23,6 @@ public class User {
     private Long cityId;
 
     private UserStatus status;
+
+    private DocumentType documentType;
 }

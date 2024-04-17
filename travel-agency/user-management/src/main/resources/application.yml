@@ -45,3 +45,5 @@ request-mapping:
   controller:
     user: user
     document-type: document-type
+    permission: permission
+    rol: rol
