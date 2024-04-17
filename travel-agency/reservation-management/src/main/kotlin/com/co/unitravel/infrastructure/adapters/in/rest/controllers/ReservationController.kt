@@ -1,6 +1,8 @@
 package com.co.unitravel.infrastructure.adapters.`in`.rest.controllers
 
+import com.co.unitravel.domain.models.enums.ReservationStatus
 import com.co.unitravel.infrastructure.adapters.`in`.rest.configuration.ReservationApi
+import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.filter.ReservationFilterRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.ReservationRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.ReservationUpdateRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.response.ReservationResponse
@@ -32,5 +34,17 @@ class ReservationController(private val reservationUseCase: ReservationUseCase, 
     override fun findById(id: Long): ResponseEntity<ReservationResponse> {
         val result = reservationUseCase.getById(id);
         return ResponseEntity(reservationMapperApi.domainToResponse(result), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    override fun updateStatus(id: Long, status: ReservationStatus): ResponseEntity<ReservationResponse> {
+        val response = reservationUseCase.updateStatus(id, status);
+        return ResponseEntity(reservationMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    override fun findAllCriteria(reservationFilterRequest: ReservationFilterRequest): ResponseEntity<List<ReservationResponse>> {
+        val response = reservationUseCase.findAllByCriteria(reservationMapperApi.filterRequestToRq(reservationFilterRequest));
+        return ResponseEntity(reservationMapperApi.domainsToResponses(response), HttpStatus.OK);
     }
 }

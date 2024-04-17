@@ -3,12 +3,14 @@ package com.co.unitravel.infrastructure.adapters.out.database.implementation
 import com.co.unitravel.application.exceptions.reservation.ReservationErrorCodes
 import com.co.unitravel.application.exceptions.reservation.ReservationNotFoundException
 import com.co.unitravel.domain.models.Reservation
+import com.co.unitravel.domain.models.enums.ReservationStatus
 import com.co.unitravel.infrastructure.adapters.out.database.entities.ReservationEntity
 import com.co.unitravel.infrastructure.adapters.out.database.mappers.reservation.ReservationMapper
 import com.co.unitravel.infrastructure.adapters.out.database.repository.ReservationRespository
 import com.co.unitravel.infrastructure.ports.out.reservation.ReservationPort
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 
 @Component
 @RequiredArgsConstructor
@@ -32,4 +34,15 @@ class ReservationAdapter(private val reservationRepository: ReservationResposito
         errorNotFound.addError(ReservationErrorCodes.RESERVATION_NOT_FOUND, arrayOf(id))
         return reservationMapper.entityToDomain(reservationRepository.findById(id).orElseThrow{errorNotFound});
     }
+
+    override fun findAllByCriteria(
+        accommodationId: Long?,
+        customerId: Long?,
+        checkInDate: LocalDate?,
+        reservationStatus: ReservationStatus?
+    ): List<Reservation> {
+        val response = reservationRepository.findAllByCriteria(accommodationId, customerId, checkInDate, reservationStatus)
+        return reservationMapper.entitiesToDomains(response)
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.co.unitravel.infrastructure.adapters.`in`.rest.mappers
 
 import com.co.unitravel.domain.models.Reservation
+import com.co.unitravel.domain.models.filter.ReservationFilterRq
+import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.filter.ReservationFilterRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.ReservationRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.ReservationUpdateRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.response.ReservationResponse
@@ -25,4 +27,6 @@ interface ReservationMapperApi {
 
     @Mapping(target = "flight.id", source= "flightId")
     fun updateRequestToDomain(reservationUpdateRequest: ReservationUpdateRequest): Reservation
+
+    fun filterRequestToRq(reservationFilterRequest: ReservationFilterRequest): ReservationFilterRq
 }

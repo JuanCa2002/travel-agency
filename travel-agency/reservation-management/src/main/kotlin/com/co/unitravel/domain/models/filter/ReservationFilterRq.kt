@@ -11,6 +11,6 @@ data class ReservationFilterRq(
 
     var checkInDate: LocalDate?,
 
-    var reservationDate: ReservationStatus?
+    var reservationStatus: ReservationStatus
 
 )

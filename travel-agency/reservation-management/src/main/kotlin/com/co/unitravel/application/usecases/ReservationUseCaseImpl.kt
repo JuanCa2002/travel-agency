@@ -2,6 +2,7 @@ package com.co.unitravel.application.usecases
 
 import com.co.unitravel.domain.models.Reservation
 import com.co.unitravel.domain.models.enums.ReservationStatus
+import com.co.unitravel.domain.models.filter.ReservationFilterRq
 import com.co.unitravel.infrastructure.ports.`in`.reservation.ReservationUseCase
 import com.co.unitravel.infrastructure.ports.out.flight.FlightPort
 import com.co.unitravel.infrastructure.ports.out.reservation.ReservationPort
@@ -42,5 +43,20 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort, 
     @Transactional(readOnly = true)
     override fun getById(id: Long): Reservation {
         return reservationPort.findById(id)
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    override fun updateStatus(id: Long, reservationStatus: ReservationStatus): Reservation {
+        val reservation = Reservation()
+        reservation.reservationStatus = reservationStatus
+        return reservationPort.update(id, reservation)
+    }
+
+    @Transactional(readOnly = true)
+    override fun findAllByCriteria(reservationFilterRq: ReservationFilterRq): List<Reservation> {
+        return reservationPort.findAllByCriteria(reservationFilterRq.customerId,
+            reservationFilterRq.acocommodationId,
+            reservationFilterRq.checkInDate,
+            reservationFilterRq.reservationStatus)
     }
 }
