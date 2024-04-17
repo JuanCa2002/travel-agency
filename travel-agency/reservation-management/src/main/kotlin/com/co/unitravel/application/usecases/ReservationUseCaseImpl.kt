@@ -55,7 +55,7 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort, 
     @Transactional(readOnly = true)
     override fun findAllByCriteria(reservationFilterRq: ReservationFilterRq): List<Reservation> {
         return reservationPort.findAllByCriteria(reservationFilterRq.customerId,
-            reservationFilterRq.acocommodationId,
+            reservationFilterRq.accommodationId,
             reservationFilterRq.checkInDate,
             reservationFilterRq.reservationStatus)
     }

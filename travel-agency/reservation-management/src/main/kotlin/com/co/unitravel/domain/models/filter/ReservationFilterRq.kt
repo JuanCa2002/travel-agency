@@ -5,12 +5,12 @@ import java.time.LocalDate
 
 data class ReservationFilterRq(
 
-    var acocommodationId: Long?,
+    var accommodationId: Long?,
 
     var customerId: Long?,
 
     var checkInDate: LocalDate?,
 
-    var reservationStatus: ReservationStatus
+    var reservationStatus: ReservationStatus?
 
 )
