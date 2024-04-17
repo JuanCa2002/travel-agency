@@ -11,7 +11,7 @@ import java.util.List;
 @Configuration
 public class UserOpenApiConfig {
 
-    private static final String SERVER_PORT = "2208";
+    private static final String SERVER_PORT = "8084";
 
     @Bean
     public OpenAPI springShopOpenAPI() {

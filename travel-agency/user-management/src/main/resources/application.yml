@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8084
   servlet:
     context-path: /api/v1/user-management
 
@@ -45,3 +45,4 @@ request-mapping:
   controller:
     user: user
     document-type: document-type
+    permission: permission

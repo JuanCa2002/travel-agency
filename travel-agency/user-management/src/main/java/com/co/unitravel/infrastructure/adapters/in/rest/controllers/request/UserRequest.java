@@ -18,4 +18,6 @@ public class UserRequest {
     private String phoneNumber;
 
     private Long cityId;
+
+    private Integer documentTypeId;
 }

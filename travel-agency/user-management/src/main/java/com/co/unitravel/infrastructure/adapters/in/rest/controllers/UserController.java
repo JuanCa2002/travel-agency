@@ -1,6 +1,7 @@
 package com.co.unitravel.infrastructure.adapters.in.rest.controllers;
 
 import com.co.unitravel.application.exceptions.general.BusinessException;
+import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.infrastructure.adapters.in.rest.configuration.UserApi;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.UserRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.UserResponse;
@@ -24,7 +25,7 @@ public class UserController implements UserApi {
 
     @PostMapping
     @Override
-    public ResponseEntity<UserResponse> save(UserRequest userRequest) throws BusinessException {
+    public ResponseEntity<UserResponse> save(UserRequest userRequest) throws BusinessException, NotFoundException {
         var response = userUseCase.create(userMapperApi.requestToDomain(userRequest));
         return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.CREATED);
     }
