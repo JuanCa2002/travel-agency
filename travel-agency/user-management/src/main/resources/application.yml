@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 0
   servlet:
     context-path: /api/v1/user-management
 
@@ -30,7 +30,7 @@ spring:
       ddl-auto: update
     database-platform: com.mysql.cj.jdbc.Driver
   rabbitmq:
-    host: rabbitmq
+    host: localhost
 
 eureka:
   instance:
@@ -46,3 +46,4 @@ request-mapping:
     user: user
     document-type: document-type
     permission: permission
+    rol: rol

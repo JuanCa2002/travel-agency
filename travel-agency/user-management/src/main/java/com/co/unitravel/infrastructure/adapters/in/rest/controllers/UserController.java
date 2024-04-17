@@ -7,6 +7,7 @@ import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.User
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.UserResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.mappers.UserMapperApi;
 import com.co.unitravel.infrastructure.ports.in.user.UserUseCase;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserController implements UserApi {
 
     @PostMapping
     @Override
-    public ResponseEntity<UserResponse> save(UserRequest userRequest) throws BusinessException, NotFoundException {
+    public ResponseEntity<UserResponse> save(UserRequest userRequest) throws BusinessException, NotFoundException, JsonProcessingException {
         var response = userUseCase.create(userMapperApi.requestToDomain(userRequest));
         return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.CREATED);
     }

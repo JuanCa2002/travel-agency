@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(
         componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
@@ -16,4 +18,6 @@ public interface PermissionMapper {
     Permission entityToDomain(PermissionEntity entity);
 
     PermissionEntity domainToEntity(Permission domain);
+
+    List<Permission> entitiesToDomains(List<PermissionEntity> entities);
 }

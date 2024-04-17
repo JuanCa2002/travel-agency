@@ -9,4 +9,6 @@ public class GeneralApiErrorCodes {
     public static final String VALIDATION_CONFIG = "com.co.travel.application.exceptions.general.GeneralErrorCodes.VALIDATION_CONFIG";
 
     public static final String GENERIC_ERROR_MESSAGE = "com.co.travel.application.exceptions.general.GeneralErrorCodes.GENERIC_ERROR_MESSAGE";
+
+    public static final String CITY_NOT_FOUND = "com.co.travel.application.exceptions.city.GeneralErrorCodes.CITY_NOT_FOUND";
 }
