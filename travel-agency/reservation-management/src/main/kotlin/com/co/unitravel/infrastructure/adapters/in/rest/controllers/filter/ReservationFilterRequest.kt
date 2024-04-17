@@ -1,9 +1,9 @@
-package com.co.unitravel.domain.models.filter
+package com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.filter
 
 import com.co.unitravel.domain.models.enums.ReservationStatus
 import java.time.LocalDate
 
-data class ReservationFilterRq(
+data class ReservationFilterRequest(
 
     var accommodationId: Long?,
 
@@ -11,6 +11,5 @@ data class ReservationFilterRq(
 
     var checkInDate: LocalDate?,
 
-    var reservationStatus: ReservationStatus?
-
+    var status: ReservationStatus?
 )
