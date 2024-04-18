@@ -46,3 +46,4 @@ request-mapping:
     department: department
     city: city
     destination: destination
+    accommodation: accommodation
