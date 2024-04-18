@@ -13,4 +13,8 @@ public interface AccommodationPort {
     Accommodation update(Accommodation accommodation) throws NotFoundException;
 
     PageModel<List<Accommodation>> findByCriteria(Integer rowsPerPage, Integer skip);
+
+    Accommodation findById(Long id) throws NotFoundException;
+
+    Accommodation findByDestination(Long destinationId) throws NotFoundException;
 }

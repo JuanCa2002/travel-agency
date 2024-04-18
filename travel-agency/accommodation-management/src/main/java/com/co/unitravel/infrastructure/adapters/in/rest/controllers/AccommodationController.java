@@ -50,4 +50,25 @@ public class AccommodationController implements AccommodationApi {
         pageResponse.setTotal(response.total());
         return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    @Override
+    public ResponseEntity<AccommodationResponse> findById(Long id) throws NotFoundException {
+        var response = accommodationUseCase.getById(id);
+        return new ResponseEntity<>(accommodationMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/destination/{id}")
+    @Override
+    public ResponseEntity<AccommodationResponse> findByDestination(Long destinationId) throws NotFoundException {
+        var response = accommodationUseCase.getByDestination(destinationId);
+        return new ResponseEntity<>(accommodationMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    @Override
+    public ResponseEntity<AccommodationResponse> updateStatus(Long id) throws NotFoundException {
+        var response = accommodationUseCase.updateStatus(id);
+        return new ResponseEntity<>(accommodationMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
 }

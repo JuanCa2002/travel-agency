@@ -45,4 +45,25 @@ public class AccommodationUseCaseImpl implements AccommodationUseCase {
     public PageModel<List<Accommodation>> findByCriteria(Integer rowsPerPage, Integer skip) {
         return accommodationPort.findByCriteria(rowsPerPage, skip);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Accommodation getById(Long id) throws NotFoundException {
+        return accommodationPort.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Accommodation getByDestination(Long id) throws NotFoundException {
+        return accommodationPort.findByDestination(id);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public Accommodation updateStatus(Long id) throws NotFoundException {
+        Accommodation accommodation = accommodationPort.findById(id);
+        accommodation.setAccommodationStatus(accommodation.getAccommodationStatus().equals(AccommodationStatus.ACTIVO) ?
+                AccommodationStatus.INACTIVO : AccommodationStatus.ACTIVO);
+        return accommodationPort.update(accommodation);
+    }
 }

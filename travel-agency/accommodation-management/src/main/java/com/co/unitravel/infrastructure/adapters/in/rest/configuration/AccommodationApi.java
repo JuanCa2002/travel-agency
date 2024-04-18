@@ -4,9 +4,7 @@ import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.AccommodationRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.AccommodationUpdateRequest;
-import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.DestinationUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.AccommodationResponse;
-import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.DestinationResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -35,4 +33,16 @@ public interface AccommodationApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "List of accommodation", content = @Content(mediaType = "application/json", array= @ArraySchema(schema = @Schema(implementation = AccommodationResponse.class))))})
     ResponseEntity<PageResponse<List<AccommodationResponse>>> findByCriteria(@RequestParam(name = "rowsPerPage", defaultValue = "10") Integer rowsPerPage,
                                                                            @RequestParam(name = "skip", defaultValue = "0") Integer skip);
+
+    @Operation(summary = "Find a accommodation by id", description = "Find an existing accommodation by its id", tags = {"accommodation"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found accommodation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccommodationResponse.class)))})
+    ResponseEntity<AccommodationResponse> findById(Long id) throws NotFoundException;
+
+    @Operation(summary = "Find a accommodation by destination", description = "Find an existing accommodation by destination id", tags = {"accommodation"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found accommodation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccommodationResponse.class)))})
+    ResponseEntity<AccommodationResponse> findByDestination(Long destinationId) throws NotFoundException;
+
+    @Operation(summary = "Update status of a accommodation by id", description = "Update status of an existing accommodation by its id", tags = {"accommodation"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "reservation status updated", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccommodationResponse.class)))})
+    ResponseEntity<AccommodationResponse> updateStatus(Long id) throws NotFoundException;
 }
