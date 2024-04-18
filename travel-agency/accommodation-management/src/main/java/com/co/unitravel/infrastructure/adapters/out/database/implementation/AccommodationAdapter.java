@@ -2,10 +2,13 @@ package com.co.unitravel.infrastructure.adapters.out.database.implementation;
 
 import com.co.unitravel.application.exceptions.accommodation.AccommodationErrorCodes;
 import com.co.unitravel.application.exceptions.accommodation.AccommodationNotFoundException;
+import com.co.unitravel.application.exceptions.destination.DestinationErrorCodes;
+import com.co.unitravel.application.exceptions.destination.DestinationNotFoundException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.domain.models.Accommodation;
 import com.co.unitravel.domain.models.record.PageModel;
 import com.co.unitravel.infrastructure.adapters.out.database.entities.AccommodationEntity;
+import com.co.unitravel.infrastructure.adapters.out.database.entities.DestinationEntity;
 import com.co.unitravel.infrastructure.adapters.out.database.mappers.accommodation.AccommodationMapper;
 import com.co.unitravel.infrastructure.adapters.out.database.repository.AccommodationRepository;
 import com.co.unitravel.infrastructure.ports.out.accommodation.AccommodationPort;
@@ -48,5 +51,21 @@ public class AccommodationAdapter implements AccommodationPort {
 
         Page<AccommodationEntity> page = accommodationRepository.findByCriteria(pageable);
         return new PageModel<>(accommodationMapper.entitiesToDomains(page.getContent()), BigInteger.valueOf(page.getTotalElements()));
+    }
+
+    @Override
+    public Accommodation findById(Long id) throws NotFoundException {
+        AccommodationNotFoundException errorNotFound = new AccommodationNotFoundException();
+        errorNotFound.addError(AccommodationErrorCodes.ACCOMMODATION_NOT_FOUND, new Object[]{id});
+        return accommodationMapper.entityToDomain(accommodationRepository.findById(id).orElseThrow(()-> errorNotFound));
+    }
+
+    @Override
+    public Accommodation findByDestination(Long destinationId) throws NotFoundException {
+        AccommodationNotFoundException errorNotFound = new AccommodationNotFoundException();
+        AccommodationEntity foundAccommodation = accommodationRepository.findByDestination(destinationId);
+        errorNotFound.addError(AccommodationErrorCodes.ACCOMMODATION_BY_LOCATION_NOT_FOUND, new Object[]{destinationId});
+        if(foundAccommodation == null) throw errorNotFound;
+        return accommodationMapper.entityToDomain(foundAccommodation);
     }
 }
