@@ -14,7 +14,7 @@ public class AccommodationOpenAPIConfig {
     private static final String SERVER_PORT = "2208";
 
     @Bean
-    public OpenAPI springShopOpenAPI() {
+    public OpenAPI springAccommodationOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("Accommodation management API")
                         .description("API that provides services for the management, administration and control of uniTravel accommodations")

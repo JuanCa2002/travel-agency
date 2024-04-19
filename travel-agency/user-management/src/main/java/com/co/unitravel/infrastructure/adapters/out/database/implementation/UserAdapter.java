@@ -75,4 +75,9 @@ public class UserAdapter implements UserPort {
         if(user == null) throw errorNotFound;
         return user;
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
 }

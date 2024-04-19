@@ -6,6 +6,7 @@ import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.Comm
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.CommentUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.CityResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.CommentResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,7 +24,7 @@ public interface CommentApi {
 
     @Operation(summary = "Create new comment", description = "Add a new comment", tags = {"comment"})
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "New comment added successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CommentResponse.class)))})
-    ResponseEntity<CommentResponse> save(@Valid @RequestBody CommentRequest commentRequest) throws NotFoundException, BusinessException;
+    ResponseEntity<CommentResponse> save(@Valid @RequestBody CommentRequest commentRequest) throws NotFoundException, BusinessException, JsonProcessingException;
 
     @Operation(summary = "Update a comment by id", description = "Update an existing comment by its id", tags = {"comment"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated comment", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CommentResponse.class)))})

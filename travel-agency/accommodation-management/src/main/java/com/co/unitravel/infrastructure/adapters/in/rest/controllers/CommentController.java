@@ -9,6 +9,7 @@ import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.Comm
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.CommentResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.mappers.CommentMapperApi;
 import com.co.unitravel.infrastructure.ports.in.comment.CommentUseCase;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class CommentController implements CommentApi {
 
     @PostMapping
     @Override
-    public ResponseEntity<CommentResponse> save(CommentRequest commentRequest) throws NotFoundException, BusinessException {
+    public ResponseEntity<CommentResponse> save(CommentRequest commentRequest) throws NotFoundException, BusinessException, JsonProcessingException {
         var response = commentUseCase.create(commentMapperApi.requestToDomain(commentRequest));
         return new ResponseEntity<>(commentMapperApi.domainToResponse(response), HttpStatus.CREATED);
     }

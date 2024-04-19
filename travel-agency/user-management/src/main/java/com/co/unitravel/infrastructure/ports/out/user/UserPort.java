@@ -17,4 +17,6 @@ public interface UserPort {
      User findByAuthentication(String email, String password) throws NotFoundException;
 
      User findByEmail(String email) throws NotFoundException;
+
+     boolean existsById(Long id);
 }

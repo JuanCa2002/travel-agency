@@ -11,6 +11,8 @@ springdoc:
     path: /swagger.v1+json
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: reservation-management
     version: v1

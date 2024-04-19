@@ -1,10 +1,12 @@
 package com.co.unitravel.application.usecases
 
-import com.co.unitravel.domain.models.Airplane
+import com.co.unitravel.application.exceptions.general.GeneralApiErrorCodes
+import com.co.unitravel.application.exceptions.seat.SeatNotFoundException
 import com.co.unitravel.domain.models.Seat
 import com.co.unitravel.domain.models.enums.SeatStatus
 import com.co.unitravel.infrastructure.ports.`in`.seat.SeatUseCase
 import com.co.unitravel.infrastructure.ports.out.airplane.AirplanePort
+import com.co.unitravel.infrastructure.ports.out.client.`in`.UserInClientPort
 import com.co.unitravel.infrastructure.ports.out.seat.SeatPort
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
@@ -13,11 +15,16 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @RequiredArgsConstructor
-open class SeatUseCaseImpl(private val seatPort: SeatPort, private val airplanePort: AirplanePort): SeatUseCase {
+open class SeatUseCaseImpl(private val seatPort: SeatPort,
+                           private val airplanePort: AirplanePort,
+                           private val userInClientPort: UserInClientPort): SeatUseCase {
 
     @Transactional(propagation = Propagation.REQUIRED)
     override fun create(seat: Seat): Seat {
+        val errorNotFound:SeatNotFoundException = SeatNotFoundException()
+        errorNotFound.addError(GeneralApiErrorCodes.USER_NOT_FOUND, arrayOf(seat.customerId!!))
         val airplane = airplanePort.findById(seat.airplane!!.id!!)
+        if(!userInClientPort.findById(seat.customerId!!)) throw errorNotFound
         seat.id = null;
         seat.seatStatus = SeatStatus.DISPONIBLE;
         seat.airplane = airplane

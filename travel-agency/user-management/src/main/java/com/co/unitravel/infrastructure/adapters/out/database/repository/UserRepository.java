@@ -11,6 +11,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "FROM UserEntity U WHERE U.documentNumber = :documentNumber")
     boolean existsByDocument(@Param("documentNumber") String documentNumber);
 
+    @Query("SELECT CASE WHEN COUNT(U) > 0 THEN TRUE ELSE FALSE END " +
+            "FROM UserEntity U WHERE U.id = :id")
+    boolean existsById(@Param("id") Long id);
+
 
     @Query("SELECT U FROM UserEntity U WHERE U.documentNumber = :documentNumber " +
             "AND U.documentType.id = :documentTypeId")
