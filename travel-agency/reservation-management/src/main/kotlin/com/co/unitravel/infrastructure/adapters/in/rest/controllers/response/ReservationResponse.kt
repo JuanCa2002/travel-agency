@@ -23,9 +23,9 @@ data class ReservationResponse(
 
     var paymentMethod: ReservationPaymentMethod? = null,
 
-    var numberPeople: String? = null,
+    var numberPeople: Int? = null,
 
     var reservationStatus: ReservationStatus? = null,
 
-    var finalPrice: Int? = null
+    var finalPrice: Long? = null
 )

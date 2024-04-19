@@ -36,7 +36,7 @@ data class SeatEntity(
         @Column(name = "price", nullable = false, length = 8)
         var price: Int? = null,
 
-        @Column(name = "customer_id", nullable = false, length = 8)
+        @Column(name = "customer_id", nullable = true, length = 8)
         var customerId: Long? = null,
 
         @Enumerated(EnumType.STRING)

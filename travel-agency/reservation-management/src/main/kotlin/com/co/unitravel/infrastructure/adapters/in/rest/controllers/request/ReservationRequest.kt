@@ -13,8 +13,7 @@ data class ReservationRequest(
     @field:NotNull
     var customerId: Long,
 
-    @field:NotNull
-    var flightId: Long,
+    var flightId: Long?,
 
     @field:NotNull
     var checkInDate: LocalDate,
@@ -26,6 +25,6 @@ data class ReservationRequest(
     var paymentMethod: ReservationPaymentMethod,
 
     @field:NotNull
-    var numberPeople: String
+    var numberPeople: Int
 
 )

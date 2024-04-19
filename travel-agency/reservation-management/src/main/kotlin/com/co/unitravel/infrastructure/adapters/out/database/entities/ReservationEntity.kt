@@ -31,7 +31,7 @@ data class ReservationEntity(
     var customerId: Long? = null,
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "flight_id", nullable = false)
+    @JoinColumn(name = "flight_id", nullable = true)
     var flight: FlightEntity? = FlightEntity(),
 
     @Column(name = "reservation_date", nullable = false, length = 8)
@@ -48,12 +48,12 @@ data class ReservationEntity(
     var paymentMethod: ReservationPaymentMethod? = null,
 
     @Column(name = "number_people", nullable = false, length = 8)
-    var numberPeople: String? = null,
+    var numberPeople: Int? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "reservation_status", nullable = false, length = 15)
     var reservationStatus: ReservationStatus? = null,
 
     @Column(name = "final_price", nullable = false, length = 8)
-    var finalPrice: Int? = null
+    var finalPrice: Long? = null
 )

@@ -15,8 +15,5 @@ data class SeatRequest(
         val seatClass: SeatClass,
 
         @field:NotNull
-        val price: Int,
-
-        @field:NotNull
-        val customerId: Long
+        val price: Int
 )

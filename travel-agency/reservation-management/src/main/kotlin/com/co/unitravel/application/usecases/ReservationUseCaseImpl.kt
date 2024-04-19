@@ -1,7 +1,10 @@
 package com.co.unitravel.application.usecases
 
 import com.co.unitravel.application.exceptions.general.GeneralApiErrorCodes
+import com.co.unitravel.application.exceptions.reservation.ReservationBusinessException
+import com.co.unitravel.application.exceptions.reservation.ReservationErrorCodes
 import com.co.unitravel.application.exceptions.reservation.ReservationNotFoundException
+import com.co.unitravel.domain.models.Flight
 import com.co.unitravel.domain.models.Reservation
 import com.co.unitravel.domain.models.enums.ReservationStatus
 import com.co.unitravel.domain.models.filter.ReservationFilterRq
@@ -21,6 +24,7 @@ import java.time.LocalDate
 @RequiredArgsConstructor
 open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
                                   private val flightPort: FlightPort,
+                                  private val seatPort: SeatPort,
                                   private val userInClientPort: UserInClientPort,
                                   private val accommodationInClientPort: AccommodationInClientPort) :
     ReservationUseCase {
@@ -28,9 +32,8 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
     @Transactional(propagation = Propagation.REQUIRED)
     override fun create(reservation: Reservation): Reservation {
         val errorNotFound = ReservationNotFoundException()
-        val flight = flightPort.findById(reservation.flight!!.id!!)
-        val o = accommodationInClientPort.findById(reservation.accommodationId!!)
-        println("ACCOMMODATION$o")
+        val error = ReservationBusinessException()
+        val (finalPrice, flight) = calculateFinalPrice(reservation)
         if(!userInClientPort.findById(reservation.customerId!!)){
             errorNotFound.addError(GeneralApiErrorCodes.USER_NOT_FOUND, arrayOf(reservation.customerId!!))
             throw errorNotFound
@@ -38,10 +41,20 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
             errorNotFound.addError(GeneralApiErrorCodes.ACCOMMODATION_NOT_FOUND, arrayOf(reservation.accommodationId!!))
             throw errorNotFound
         }
+        val checkInDate = reservation.checkInDate
+        val checkOutDate = reservation.checkOutDate
+        if(checkInDate!!.isAfter(checkOutDate) or checkInDate.isEqual(checkOutDate)){
+            error.addError(ReservationErrorCodes.RESERVATION_INVALID_DATE_TIME, null)
+            throw error
+        }
+        if(reservationPort.validateDates(checkInDate, checkOutDate!!)) {
+            error.addError(ReservationErrorCodes.RESERVATION_INVALID_DATES, null)
+            throw error
+        }
         reservation.id = null
         reservation.flight = flight
         reservation.reservationDate = LocalDate.now()
-        reservation.finalPrice = 2000000
+        reservation.finalPrice = finalPrice
         reservation.reservationStatus = ReservationStatus.PENDIENTE
         return reservationPort.save(reservation)
     }
@@ -74,5 +87,19 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
             reservationFilterRq.accommodationId,
             reservationFilterRq.checkInDate,
             reservationFilterRq.reservationStatus)
+    }
+
+    private fun calculateFinalPrice(reservation:Reservation): Pair<Long, Flight?>{
+        var finalPrice = 0L;
+        var flight: Flight? = null
+        if(reservation.flight!!.id != null){
+            flight = flightPort.findById(reservation.flight!!.id!!)
+           val seatsByCustomer = seatPort.findByCustomerAndAirplane(reservation.customerId!!,flight.airplane!!.id!!,flight.id!!)
+           for(seat in seatsByCustomer){
+               finalPrice += seat.price!!
+           }
+           finalPrice +=  flight.price!!
+        }
+        return Pair(finalPrice, flight)
     }
 }

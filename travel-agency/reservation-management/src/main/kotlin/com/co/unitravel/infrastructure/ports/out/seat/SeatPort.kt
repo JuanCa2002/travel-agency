@@ -12,6 +12,6 @@ interface SeatPort {
 
     fun findByAirplane(airplaneId: Long): List<Seat>
 
-    //fun findByCustomer(customerId: Long): Seat
+    fun findByCustomerAndAirplane(customerId: Long, airplaneId: Long, flightId: Long): List<Seat>
 
 }
