@@ -18,4 +18,10 @@ interface ReservationRespository: JpaRepository<ReservationEntity, Long> {
                           @Param("checkInDate") checkInDate: LocalDate?,
                           @Param("reservationStatus") reservationStatus: ReservationStatus?
     ): List<ReservationEntity>
+
+    @Query("SELECT CASE WHEN COUNT(R) > 0 THEN TRUE ELSE FALSE END " +
+            "FROM ReservationEntity R WHERE (:checkInDate BETWEEN R.checkInDate and R.checkOutDate) OR " +
+            "(:checkOutDate BETWEEN R.checkInDate and R.checkOutDate)")
+    fun validateDates(@Param("checkInDate") checkInDate: LocalDate,
+                      @Param("checkOutDate") checkOutDate: LocalDate): Boolean
 }

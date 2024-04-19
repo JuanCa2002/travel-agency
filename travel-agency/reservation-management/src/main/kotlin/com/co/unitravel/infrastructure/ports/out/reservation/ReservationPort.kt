@@ -16,4 +16,6 @@ interface ReservationPort {
                           customerId: Long?,
                           checkInDate: LocalDate?,
                           reservationStatus: ReservationStatus?):List<Reservation>
+
+    fun validateDates(checkInDate: LocalDate, checkOutDate: LocalDate): Boolean
 }

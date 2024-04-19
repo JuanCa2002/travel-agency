@@ -45,4 +45,8 @@ class ReservationAdapter(private val reservationRepository: ReservationResposito
         return reservationMapper.entitiesToDomains(response)
     }
 
+    override fun validateDates(checkInDate: LocalDate, checkOutDate: LocalDate): Boolean {
+        return reservationRepository.validateDates(checkInDate, checkOutDate)
+    }
+
 }
