@@ -22,4 +22,15 @@ public class RolPermissionAdapter implements RolPermissionPort {
         List<RolPermissionEntity> savedList = rolPermissionRepository.saveAll(rolPermissionMapper.domainsToEntities(rolPermissions));
         return rolPermissionMapper.entitiesToDomains(savedList);
     }
+
+    @Override
+    public void removeAll(List<RolPermission> rolPermissions) {
+        rolPermissionRepository.deleteAll(rolPermissionMapper.domainsToEntities(rolPermissions));
+    }
+
+    @Override
+    public List<RolPermission> findByRole(Long rolId) {
+        List<RolPermissionEntity> foundList = rolPermissionRepository.findByRole(rolId);
+        return rolPermissionMapper.entitiesToDomains(foundList);
+    }
 }

@@ -51,6 +51,9 @@ public class UserEntity {
     @Column(name = "phoneNumber", length = 13)
     private String phoneNumber;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "city_id", length = 10, nullable = false)
     private Long cityId;
 
@@ -59,6 +62,6 @@ public class UserEntity {
     private UserStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "document-type_id", nullable = false)
+    @JoinColumn(name = "document_type_id", nullable = false)
     private DocumentTypeEntity documentType;
 }
