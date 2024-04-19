@@ -24,6 +24,7 @@ public class AccommodationUseCaseImpl implements AccommodationUseCase {
 
     private final AccommodationPort accommodationPort;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Accommodation create(Accommodation accommodation) throws NotFoundException, BusinessException {
         Destination destination = destinationPort.findById(accommodation.getDestination().getId());

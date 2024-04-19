@@ -47,3 +47,4 @@ request-mapping:
     city: city
     destination: destination
     accommodation: accommodation
+    comment: comment
