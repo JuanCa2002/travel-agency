@@ -3,6 +3,7 @@ package com.co.unitravel.infrastructure.adapters.in.rest.configuration;
 import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.RolRequest;
+import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.RolUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.GetRolResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.RolResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,4 +31,8 @@ public interface RolApi {
     @Operation(summary = "Find all roles", description = "Find a complete list of roles", tags = {"rol"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All roles", content = @Content(mediaType = "application/json", array= @ArraySchema(schema = @Schema(implementation = GetRolResponse.class))))})
     ResponseEntity<List<GetRolResponse>> findAll();
+
+    @Operation(summary = "Update a rol", description = "Update a existing rol by its id", tags = {"rol"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated rol", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RolResponse.class)))})
+    ResponseEntity<RolResponse> update(@Valid @RequestBody RolUpdateRequest rolUpdateRequest) throws NotFoundException, BusinessException;
 }

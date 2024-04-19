@@ -11,4 +11,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "FROM UserEntity U WHERE U.documentNumber = :documentNumber")
     boolean existsByDocument(@Param("documentNumber") String documentNumber);
 
+
+    @Query("SELECT U FROM UserEntity U WHERE U.documentNumber = :documentNumber " +
+            "AND U.documentType.id = :documentTypeId")
+    UserEntity findByIdentification(@Param("documentNumber") String documentNumber,
+                                    @Param("documentTypeId") Integer documentTypeId);
+
+    @Query("SELECT U FROM UserEntity U WHERE U.email = :email")
+    UserEntity findByEmail(@Param("email") String email);
+
 }

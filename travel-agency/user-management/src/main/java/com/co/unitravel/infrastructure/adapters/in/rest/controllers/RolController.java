@@ -4,6 +4,7 @@ import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.infrastructure.adapters.in.rest.configuration.RolApi;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.RolRequest;
+import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.RolUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.GetRolResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.RolResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.mappers.RolMapperApi;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,5 +49,12 @@ public class RolController implements RolApi {
     public ResponseEntity<List<GetRolResponse>> findAll() {
         var response = rolUseCase.getAll();
         return new ResponseEntity<>(rolMapperApi.domainsToGetResponses(response), HttpStatus.OK);
+    }
+
+    @PutMapping
+    @Override
+    public ResponseEntity<RolResponse> update(RolUpdateRequest rolUpdateRequest) throws NotFoundException, BusinessException {
+        var response = rolUseCase.update(rolMapperApi.updateRequestToUpdateDomain(rolUpdateRequest));
+        return new ResponseEntity<>(rolMapperApi.domainToResponse(response), HttpStatus.OK);
     }
 }

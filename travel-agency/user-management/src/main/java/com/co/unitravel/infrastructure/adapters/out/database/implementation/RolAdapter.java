@@ -37,4 +37,18 @@ public class RolAdapter implements RolPort {
         errorNotFound.addError(RolErrorCodes.ROL_NOT_FOUND, new Object[]{id});
         return rolMapper.entityToDomain(rolRepository.findById(id).orElseThrow(()-> errorNotFound));
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return rolRepository.existsByName(name);
+    }
+
+    @Override
+    public Rol update(Rol rol) throws NotFoundException {
+        RolNotFoundException errorNotFound = new RolNotFoundException();
+        errorNotFound.addError(RolErrorCodes.ROL_NOT_FOUND, new Object[]{rol.getId()});
+        RolEntity target = rolRepository.findById(rol.getId()).orElseThrow(()-> errorNotFound);
+        rolMapper.mergeToEntity(target, rol);
+        return rolMapper.entityToDomain(rolRepository.save(target));
+    }
 }

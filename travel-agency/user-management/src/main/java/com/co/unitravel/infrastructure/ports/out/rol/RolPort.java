@@ -11,4 +11,8 @@ public interface RolPort {
     List<Rol> findAll();
 
     Rol findById(Long id) throws NotFoundException;
+
+    boolean existsByName(String name);
+
+    Rol update(Rol rol) throws NotFoundException;
 }

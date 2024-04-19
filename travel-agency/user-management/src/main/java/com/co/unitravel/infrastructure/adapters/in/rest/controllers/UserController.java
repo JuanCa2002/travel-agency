@@ -11,6 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,5 +32,47 @@ public class UserController implements UserApi {
     public ResponseEntity<UserResponse> save(UserRequest userRequest) throws BusinessException, NotFoundException, JsonProcessingException {
         var response = userUseCase.create(userMapperApi.requestToDomain(userRequest));
         return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    @Override
+    public ResponseEntity<UserResponse> findById(@PathVariable Long id) throws NotFoundException {
+        var response = userUseCase.getById(id);
+        return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    @Override
+    public ResponseEntity<UserResponse> updateStatus(Long id) throws NotFoundException {
+        var response = userUseCase.updateStatus(id);
+        return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @PatchMapping("/password/{id}")
+    @Override
+    public ResponseEntity<Void> updatePassword(Long id, String currentPassword, String newPassword) throws NotFoundException, BusinessException {
+        userUseCase.updatePassword(id, currentPassword, newPassword);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/identification")
+    @Override
+    public ResponseEntity<UserResponse> findByIdentification(String documentNumber, Integer documentTypeId) throws NotFoundException {
+        var response = userUseCase.getByIdentification(documentNumber, documentTypeId);
+        return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/authentication")
+    @Override
+    public ResponseEntity<UserResponse> findByAuthentication(String email, String password) throws NotFoundException {
+        var response = userUseCase.getByAuthentication(email, password);
+        return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/email")
+    @Override
+    public ResponseEntity<UserResponse> findByEmail(String email) throws NotFoundException {
+        var response = userUseCase.getByEmail(email);
+        return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
     }
 }
