@@ -15,4 +15,8 @@ public interface AccommodationRepository extends JpaRepository<AccommodationEnti
 
     @Query("SELECT AE FROM AccommodationEntity AE WHERE AE.destination.id =:destinationId")
     AccommodationEntity findByDestination(@Param("destinationId") Long destinationId);
+
+    @Query("SELECT CASE WHEN COUNT(AE) > 0 THEN TRUE ELSE FALSE END " +
+            "FROM AccommodationEntity AE WHERE AE.id = :id")
+    boolean existsById(@Param("id") Long id);
 }

@@ -10,6 +10,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,31 +18,41 @@ import org.springframework.context.annotation.Configuration;
 public class AmqpConfiguration {
 
     @Bean
-    public Queue cityQueue() {
+    public Queue cityUserQueue() {
         return new Queue(AmqpConfigurationConstants.CITY_QUEUE);
     }
 
     @Bean
-    public Binding cityBinding(Queue queue, TopicExchange exchange) {
+    public Binding cityUserBinding(@Qualifier("cityUserQueue") Queue queue, TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.CITY_ROUTING_KEY);
     }
 
     @Bean
-    public TopicExchange exchange() {
+    public Queue userUserQueue() {
+        return new Queue(AmqpConfigurationConstants.USER_QUEUE);
+    }
+
+    @Bean
+    public Binding userUserBinding(@Qualifier("userUserQueue") Queue queue, TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.USER_ROUTING_KEY);
+    }
+
+    @Bean
+    public TopicExchange exchangeUser() {
         return new TopicExchange(AmqpConfigurationConstants.EXCHANGE);
     }
 
 
     @Bean
-    public MessageConverter converter() {
+    public MessageConverter converterUser() {
         return new Jackson2JsonMessageConverter();
     }
 
 
     @Bean
-    public AmqpTemplate template(ConnectionFactory connectionFactory) {
+    public AmqpTemplate templateUser(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(converter());
+        rabbitTemplate.setMessageConverter(converterUser());
         return rabbitTemplate;
     }
 }

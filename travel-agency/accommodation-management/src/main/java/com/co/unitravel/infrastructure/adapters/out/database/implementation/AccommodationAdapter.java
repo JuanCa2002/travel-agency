@@ -68,4 +68,9 @@ public class AccommodationAdapter implements AccommodationPort {
         if(foundAccommodation == null) throw errorNotFound;
         return accommodationMapper.entityToDomain(foundAccommodation);
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return accommodationRepository.existsById(id);
+    }
 }

@@ -6,18 +6,39 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
 import org.springframework.amqp.support.converter.MessageConverter
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 
 open class AmqpConfig {
 
     @Bean
-    open fun cityQueue(): Queue {
+    open fun cityReservationQueue(): Queue {
         return Queue(AmqpConfigurationConstants.CITY_QUEUE)
     }
 
     @Bean
-    open fun cityBinding(queue: Queue?, exchange: TopicExchange?): Binding {
+    open fun cityReservationBinding(@Qualifier("cityReservationQueue") queue: Queue?, exchange: TopicExchange?): Binding {
         return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.CITY_ROUTING_KEY)
+    }
+
+    @Bean
+    open fun userReservationQueue(): Queue {
+        return Queue(AmqpConfigurationConstants.USER_QUEUE)
+    }
+
+    @Bean
+    open fun userReservationBinding(@Qualifier("userReservationQueue") queue: Queue?, exchange: TopicExchange?): Binding {
+        return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.USER_ROUTING_KEY)
+    }
+
+    @Bean
+    fun accommodationReservationQueue(): Queue {
+        return Queue(AmqpConfigurationConstants.ACCOMMODATION_QUEUE)
+    }
+
+    @Bean
+    fun accommodationReservationBinding(@Qualifier("accommodationReservationQueue") queue: Queue?, exchange: TopicExchange?): Binding {
+        return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.ACCOMMODATION_ROUTING_KEY)
     }
 
     @Bean
