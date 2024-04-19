@@ -20,6 +20,8 @@ public class User {
 
     private String phoneNumber;
 
+    private String password;
+
     private Long cityId;
 
     private UserStatus status;

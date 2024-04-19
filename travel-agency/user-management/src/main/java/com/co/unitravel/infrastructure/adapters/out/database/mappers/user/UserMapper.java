@@ -3,6 +3,7 @@ package com.co.unitravel.infrastructure.adapters.out.database.mappers.user;
 import com.co.unitravel.domain.models.User;
 import com.co.unitravel.infrastructure.adapters.out.database.entities.UserEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
@@ -16,4 +17,6 @@ public interface UserMapper {
     UserEntity domainToEntity(User user);
 
     User entityToDomain(UserEntity entity);
+
+    void mergeToEntity(@MappingTarget UserEntity target, User source);
 }
