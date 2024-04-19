@@ -3,6 +3,7 @@ package com.co.unitravel.infrastructure.adapters.out.database.mappers.comment;
 import com.co.unitravel.domain.models.Comment;
 import com.co.unitravel.infrastructure.adapters.out.database.entities.CommentEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;

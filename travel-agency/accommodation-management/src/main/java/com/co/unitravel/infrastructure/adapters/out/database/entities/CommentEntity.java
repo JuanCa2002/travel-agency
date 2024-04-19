@@ -1,7 +1,5 @@
 package com.co.unitravel.infrastructure.adapters.out.database.entities;
 
-import com.co.unitravel.domain.models.Accommodation;
-import com.co.unitravel.domain.models.Comment;
 import com.co.unitravel.domain.models.enums.CommentStatus;
 import com.co.unitravel.domain.models.enums.CommentType;
 import jakarta.persistence.*;
@@ -26,7 +24,7 @@ import java.time.LocalTime;
 public class CommentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCOMMODATION")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COMMENT")
     @Column(name = "id", length = 10)
     private Long id;
 
