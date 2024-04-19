@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class CommentUseCaseImpl implements CommentUseCase {
         Accommodation accommodation = accommodationPort.findById(comment.getAccommodation().getId());
         if(comment.getComment().getId() == null){
             comment.setCommentType(CommentType.PADRE);
+            comment.setComment(null);
         }else {
             comment.setCommentType(CommentType.HIJO);
             Comment foundComment = commentPort.findById(comment.getComment().getId());
@@ -41,18 +43,34 @@ public class CommentUseCaseImpl implements CommentUseCase {
         comment.setCommentStatus(CommentStatus.ACTIVO);
         comment.setCommentDate(LocalDate.now());
         comment.setCommentTime(LocalTime.now());
-        return comment;
+        return commentPort.save(comment);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Comment update(Comment comment) throws NotFoundException {
+        comment.setCommentStatus(CommentStatus.EDITADO);
         return commentPort.update(comment);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Comment updateStatus(Long id) throws NotFoundException {
-        return null;
+        Comment comment = new Comment();
+        comment.setId(id);
+        comment.setCommentStatus(CommentStatus.INACTIVO);
+        return commentPort.update(comment);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Comment> getByAccommodation(Long accommodationId) {
+        return commentPort.findByAccommodation(accommodationId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Comment> getByCustomer(Long customerId) {
+        return commentPort.findByCustomer(customerId);
     }
 }

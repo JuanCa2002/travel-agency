@@ -4,6 +4,8 @@ import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.domain.models.Comment;
 
+import java.util.List;
+
 public interface CommentUseCase {
 
     Comment create(Comment comment) throws NotFoundException, BusinessException;
@@ -11,4 +13,8 @@ public interface CommentUseCase {
     Comment update(Comment comment) throws NotFoundException;
 
     Comment updateStatus(Long id) throws NotFoundException;
+
+    List<Comment> getByAccommodation(Long accommodationId);
+
+    List<Comment> getByCustomer(Long customerId);
 }

@@ -44,10 +44,10 @@ public class CommentEntity {
     @Column(name = "comment_time", nullable = false)
     private LocalTime commentTime;
 
-    @Column(name = "comment_edit_date", nullable = false)
+    @Column(name = "comment_edit_date")
     private LocalDate commentEditDate;
 
-    @Column(name = "comment_edit_time", nullable = false)
+    @Column(name = "comment_edit_time")
     private LocalTime commentEditTime;
 
     @Enumerated(EnumType.STRING)
@@ -55,7 +55,7 @@ public class CommentEntity {
     private CommentType commentType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "comment_id", nullable = false)
+    @JoinColumn(name = "comment_id", nullable = true)
     private CommentEntity comment;
 
     @Enumerated(EnumType.STRING)

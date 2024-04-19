@@ -11,6 +11,8 @@ import com.co.unitravel.infrastructure.ports.out.comment.CommentPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class CommentAdapter implements CommentPort {
@@ -21,7 +23,7 @@ public class CommentAdapter implements CommentPort {
 
     @Override
     public Comment save(Comment comment) {
-        return null;
+        return commentMapper.entityToDomain(commentRepository.save(commentMapper.domainToEntity(comment)));
     }
 
     @Override
@@ -38,5 +40,15 @@ public class CommentAdapter implements CommentPort {
         CommentNotFoundException errorNotFound = new CommentNotFoundException();
         errorNotFound.addError(CommentErrorCodes.COMMENT_NOT_FOUND, new Object[]{id});
         return commentMapper.entityToDomain(commentRepository.findById(id).orElseThrow(()-> errorNotFound));
+    }
+
+    @Override
+    public List<Comment> findByAccommodation(Long accommodationId) {
+        return commentMapper.entitiesToDomains(commentRepository.findByAccommodation(accommodationId));
+    }
+
+    @Override
+    public List<Comment> findByCustomer(Long customerId) {
+        return commentMapper.entitiesToDomains(commentRepository.findByCustomer(customerId));
     }
 }
