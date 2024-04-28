@@ -27,4 +27,6 @@ public class AccommodationResponse {
     private Integer price;
 
     private AccommodationStatus accommodationStatus;
+
+    private Long administratorId;
 }

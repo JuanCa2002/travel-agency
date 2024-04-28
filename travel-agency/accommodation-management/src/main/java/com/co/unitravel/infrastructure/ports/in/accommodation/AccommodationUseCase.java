@@ -5,12 +5,13 @@ import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.domain.models.Accommodation;
 import com.co.unitravel.domain.models.Destination;
 import com.co.unitravel.domain.models.record.PageModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 
 public interface AccommodationUseCase {
 
-    Accommodation create(Accommodation accommodation) throws NotFoundException, BusinessException;
+    Accommodation create(Accommodation accommodation) throws NotFoundException, BusinessException, JsonProcessingException;
 
     Accommodation update(Accommodation accommodation) throws NotFoundException;
 
@@ -21,4 +22,6 @@ public interface AccommodationUseCase {
     Accommodation getByDestination(Long id) throws NotFoundException;
 
     Accommodation updateStatus(Long id) throws NotFoundException;
+
+    List<Accommodation> getByAdministratorId(Long administratorId);
 }

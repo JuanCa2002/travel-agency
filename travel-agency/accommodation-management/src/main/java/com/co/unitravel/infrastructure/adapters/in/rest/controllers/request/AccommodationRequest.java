@@ -30,4 +30,7 @@ public class AccommodationRequest {
     @NotNull
     private Integer price;
 
+    @NotNull
+    private Long administratorId;
+
 }

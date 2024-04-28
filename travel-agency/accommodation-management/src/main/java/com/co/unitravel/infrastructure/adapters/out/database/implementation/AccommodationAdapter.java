@@ -70,6 +70,12 @@ public class AccommodationAdapter implements AccommodationPort {
     }
 
     @Override
+    public List<Accommodation> findByAdministrator(Long administratorId) {
+        List<AccommodationEntity> entities = accommodationRepository.findByAdministratorId(administratorId);
+        return accommodationMapper.entitiesToDomains(entities);
+    }
+
+    @Override
     public boolean existsById(Long id) {
         return accommodationRepository.existsById(id);
     }

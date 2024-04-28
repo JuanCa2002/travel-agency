@@ -53,4 +53,7 @@ public class AccommodationEntity {
 
     @Column(name = "accommodationStatus", nullable = false)
     private AccommodationStatus accommodationStatus;
+
+    @Column(name = "administrator_id", nullable = false, length = 8)
+    private Long administratorId;
 }
