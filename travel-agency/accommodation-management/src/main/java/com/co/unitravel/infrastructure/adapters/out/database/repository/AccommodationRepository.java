@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface AccommodationRepository extends JpaRepository<AccommodationEntity, Long> {
 
     @Query("SELECT AE FROM AccommodationEntity AE")
@@ -19,4 +21,8 @@ public interface AccommodationRepository extends JpaRepository<AccommodationEnti
     @Query("SELECT CASE WHEN COUNT(AE) > 0 THEN TRUE ELSE FALSE END " +
             "FROM AccommodationEntity AE WHERE AE.id = :id")
     boolean existsById(@Param("id") Long id);
+
+    @Query("SELECT AE FROM AccommodationEntity AE WHERE AE.administratorId = :administratorId")
+    List<AccommodationEntity> findByAdministratorId(@Param("administratorId") Long administratorId);
+
 }

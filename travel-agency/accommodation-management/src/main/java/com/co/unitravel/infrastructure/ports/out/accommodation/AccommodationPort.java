@@ -18,5 +18,7 @@ public interface AccommodationPort {
 
     Accommodation findByDestination(Long destinationId) throws NotFoundException;
 
+    List<Accommodation> findByAdministrator(Long administratorId);
+
     boolean existsById(Long id);
 }
