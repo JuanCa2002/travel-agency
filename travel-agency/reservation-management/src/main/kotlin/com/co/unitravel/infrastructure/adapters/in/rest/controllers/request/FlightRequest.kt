@@ -29,10 +29,7 @@ data class FlightRequest(
     var estimatedArrivalTimeString: String,
 
     @field:NotNull
-    var name: String,
-
-    @field:NotNull
-    var price: Int
+    var name: String
 ) {
     @get:JsonIgnore
     val flightTime: LocalTime

@@ -48,9 +48,6 @@ data class FlightEntity(
     @Column(name = "name", nullable = false, length = 20)
     var name: String? = null,
 
-    @Column(name = "price", nullable = false, length = 8)
-    var price: Int? = null,
-
     @Enumerated(EnumType.STRING)
     @Column(name = "flight_status", nullable = false, length = 15)
     var flightStatus: FlightStatus? = null

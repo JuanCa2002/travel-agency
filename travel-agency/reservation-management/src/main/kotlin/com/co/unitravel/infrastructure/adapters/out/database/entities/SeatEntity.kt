@@ -34,7 +34,7 @@ data class SeatEntity(
         var seatClass: SeatClass? = null,
 
         @Column(name = "price", nullable = false, length = 8)
-        var price: Int? = null,
+        var price: Long? = null,
 
         @Column(name = "customer_id", nullable = true, length = 8)
         var customerId: Long? = null,

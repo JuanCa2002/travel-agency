@@ -22,7 +22,5 @@ data class Flight(
 
     var name: String? = null,
 
-    var price: Int? = null,
-
     var flightStatus: FlightStatus? = null
 )

@@ -1,6 +1,6 @@
 package com.co.unitravel.infrastructure.adapters.`in`.rest.configuration
 
-import com.co.unitravel.application.exceptions.general.NotFoundException
+import com.co.unitravel.domain.models.enums.SeatClass
 import com.co.unitravel.domain.models.enums.SeatStatus
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.SeatRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.SeatUpdateRequest
@@ -20,24 +20,24 @@ import org.springframework.web.bind.annotation.RequestParam
 interface SeatApi {
 
     @Operation(
-            summary = "Create new seat",
-            description = "Add a new seat",
+            summary = "Create list of a seat by a model",
+            description = "Add new seats by a model",
             tags = ["seat"]
     )
     @ApiResponses(
-            ApiResponse(responseCode = "201", description = "New seat added successfully", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
+            ApiResponse(responseCode = "201", description = "New seats added successfully", content = [Content(mediaType = "application/json", array = ArraySchema(schema = Schema(implementation = SeatResponse::class)))])
     )
-    fun save(@Valid @RequestBody seatRequest: SeatRequest): ResponseEntity<SeatResponse>
+    fun save(@Valid @RequestBody seatRequest: SeatRequest, stock: Int): ResponseEntity<List<SeatResponse>>
 
     @Operation(
-            summary = "Update a seat by id",
-            description = "Update an existing seat by its id",
+            summary = "Update a list of seats by ids",
+            description = "Update an existing seats by its ids",
             tags = ["seat"]
     )
     @ApiResponses(
-            ApiResponse(responseCode = "200", description = "Updated seat", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
+            ApiResponse(responseCode = "200", description = "Updated seats", content = [Content(mediaType = "application/json", array= ArraySchema(schema = Schema(implementation = SeatResponse::class)))])
     )
-    fun update(@Valid @RequestBody seatUpdateRequest: SeatUpdateRequest):ResponseEntity<SeatResponse>
+    fun update(ids: MutableList<Long>, customerId: Long, seatStatus: SeatStatus):ResponseEntity<List<SeatResponse>>
 
     @Operation(
             summary = "Find a seat by id",
@@ -61,17 +61,25 @@ interface SeatApi {
             tags = ["seat"]
     )
     @ApiResponses(
-            ApiResponse(responseCode = "200", description = "Airplane status updated", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
+            ApiResponse(responseCode = "200", description = "Seat status updated", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
     )
     fun updateStatus(@PathVariable id:Long, @RequestParam status: SeatStatus):ResponseEntity<SeatResponse>
 
-    //@Operation(
-    //    summary = "Find a seat by Customer",
-    //    description = "Find an existing seat by its Customer",
-    //    tags = ["seat"]
-    //)
-    //@ApiResponses(
-    //    ApiResponse(responseCode = "200", description = "Found Customer", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])
-    //)
-    //fun findByCustomer(@PathVariable customerId: Long): ResponseEntity<SeatResponse>
+
+    @Operation(summary = "Find seats by customer", description = "Find a list of seats by customer", tags = ["seat"])
+    @ApiResponses(
+        value = [ApiResponse(responseCode = "200", description = "Seat list", content = [Content(mediaType = "application/json", schema = Schema(implementation = SeatResponse::class))])]
+    )
+    fun findByCustomer(@PathVariable customerId: Long): ResponseEntity<List<SeatResponse>>
+
+
+    @Operation(
+        summary = "Update price of a seats by airplane and class",
+        description = "Update price of an existing seats by airplane id and class",
+        tags = ["seat"]
+    )
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "Seats price updated", content = [Content(mediaType = "application/json", array= ArraySchema(schema = Schema(implementation = SeatResponse::class)))])
+    )
+    fun updatePrice(airplaneId: Long, seatClass: SeatClass, newPrice: Long):ResponseEntity<List<SeatResponse>>
 }
