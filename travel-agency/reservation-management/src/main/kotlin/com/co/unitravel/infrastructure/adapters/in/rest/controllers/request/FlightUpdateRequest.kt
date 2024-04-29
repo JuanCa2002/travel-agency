@@ -25,8 +25,6 @@ data class FlightUpdateRequest(
 
     var name: String?,
 
-    var price: Int?,
-
     var flightStatus: FlightStatus?
 ){
     @get:JsonIgnore

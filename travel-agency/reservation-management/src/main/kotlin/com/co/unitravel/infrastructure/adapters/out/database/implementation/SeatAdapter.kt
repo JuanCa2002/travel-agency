@@ -1,10 +1,9 @@
 package com.co.unitravel.infrastructure.adapters.out.database.implementation
 
-import com.co.unitravel.application.exceptions.airplane.AirplaneErrorCodes
-import com.co.unitravel.application.exceptions.airplane.AirplaneNotFoundException
 import com.co.unitravel.application.exceptions.seat.SeatErrorCodes
 import com.co.unitravel.application.exceptions.seat.SeatNotFoundException
 import com.co.unitravel.domain.models.Seat
+import com.co.unitravel.domain.models.enums.SeatClass
 import com.co.unitravel.infrastructure.adapters.out.database.entities.SeatEntity
 import com.co.unitravel.infrastructure.adapters.out.database.mappers.seat.SeatMapper
 import com.co.unitravel.infrastructure.adapters.out.database.repository.SeatRepository
@@ -14,20 +13,15 @@ import org.springframework.stereotype.Component
 
 @Component
 @RequiredArgsConstructor
-class SeatAdpater(private val seatMapper: SeatMapper,
+class SeatAdapter(private val seatMapper: SeatMapper,
                   private val seatRepository: SeatRepository):
         SeatPort {
-
-    override fun save(seat: Seat): Seat {
-        val savedSeat = seatRepository.save(seatMapper.domainToEntity(seat));
-        return seatMapper.entityToDomain(savedSeat);
-    }
 
     override fun update(id: Long, seat: Seat): Seat {
         val errorNotFound = SeatNotFoundException()
         errorNotFound.addError(SeatErrorCodes.SEAT_NOT_FOUND, arrayOf(id))
-        val seatFound: SeatEntity = seatRepository.findById(id).orElseThrow{errorNotFound};
-        seatMapper.mergerToEntity(seatFound, seat);
+        var seatFound: SeatEntity = seatRepository.findById(id).orElseThrow{errorNotFound};
+        seatFound = SeatMapper.mergeToEntity(seatFound, seat);
         return seatMapper.entityToDomain(seatRepository.save(seatFound))
     }
 
@@ -49,6 +43,36 @@ class SeatAdpater(private val seatMapper: SeatMapper,
         val foundSeatList = seatRepository.findByCustomerAndAirplane(customerId, airplaneId)
         if(foundSeatList.isEmpty()) throw errorNotFoundException
         return seatMapper.entitiesToDomains(foundSeatList)
+    }
+
+    override fun saveAll(seats: List<Seat>): List<Seat> {
+        val seatsToSave: List<SeatEntity> = seatMapper.domainsToEntities(seats)
+        val savedSeats = seatRepository.saveAll(seatsToSave)
+        return seatMapper.entitiesToDomains(savedSeats)
+    }
+
+    override fun updateAll(seats: List<Seat>, ids: List<Long>): List<Seat> {
+        var targets = seatRepository.findAllById(ids)
+        targets =  SeatMapper.mergeToEntities(targets, seats)
+        return seatMapper.entitiesToDomains(seatRepository.saveAll(targets))
+    }
+
+    override fun findByIds(ids: List<Long>): List<Seat> {
+        val foundSeats = seatRepository.findAllById(ids)
+        return seatMapper.entitiesToDomains(foundSeats)
+    }
+
+    override fun findByCustomer(customerId: Long): List<Seat> {
+        val seatsByCustomer = seatRepository.findByCustomer(customerId)
+        return seatMapper.entitiesToDomains(seatsByCustomer)
+    }
+
+    override fun findByClassAndAirplane(seatClass: SeatClass, airplaneId: Long): List<Seat> {
+        val errorNotFound = SeatNotFoundException()
+        errorNotFound.addError(SeatErrorCodes.SEATS_AIRPLANE_CLASS_NOT_FOUND, arrayOf(airplaneId, seatClass))
+        val foundSeats = seatRepository.findByClassAndAirplane(seatClass, airplaneId)
+        if(foundSeats.isEmpty()) throw errorNotFound
+        return seatMapper.entitiesToDomains(foundSeats)
     }
 
 }

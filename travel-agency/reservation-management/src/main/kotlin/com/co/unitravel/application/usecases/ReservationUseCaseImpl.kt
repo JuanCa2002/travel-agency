@@ -98,7 +98,6 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
            for(seat in seatsByCustomer){
                finalPrice += seat.price!!
            }
-           finalPrice +=  flight.price!!
         }
         return Pair(finalPrice, flight)
     }

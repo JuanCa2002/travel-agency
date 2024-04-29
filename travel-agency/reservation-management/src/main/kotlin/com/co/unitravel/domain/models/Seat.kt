@@ -13,7 +13,7 @@ data class Seat(
 
         var seatClass: SeatClass? = null,
 
-        var price: Int? = null,
+        var price: Long? = null,
 
         var customerId: Long? = null,
 
