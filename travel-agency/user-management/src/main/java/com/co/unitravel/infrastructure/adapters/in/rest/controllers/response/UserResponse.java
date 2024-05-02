@@ -4,6 +4,8 @@ import com.co.unitravel.domain.models.enums.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserResponse {
@@ -25,4 +27,6 @@ public class UserResponse {
     private Long cityId;
 
     private UserStatus status;
+
+    private List<RolResponse> rolList;
 }

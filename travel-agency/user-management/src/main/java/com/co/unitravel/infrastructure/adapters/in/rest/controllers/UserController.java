@@ -4,6 +4,7 @@ import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.infrastructure.adapters.in.rest.configuration.UserApi;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.UserRequest;
+import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.UserUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.UserResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.mappers.UserMapperApi;
 import com.co.unitravel.infrastructure.ports.in.user.UserUseCase;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +40,13 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) throws NotFoundException {
         var response = userUseCase.getById(id);
+        return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
+    }
+
+    @PutMapping
+    @Override
+    public ResponseEntity<UserResponse> update(UserUpdateRequest userUpdateRequest) throws NotFoundException, JsonProcessingException {
+        var response = userUseCase.update(userMapperApi.updateRequestToDomain(userUpdateRequest));
         return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.OK);
     }
 

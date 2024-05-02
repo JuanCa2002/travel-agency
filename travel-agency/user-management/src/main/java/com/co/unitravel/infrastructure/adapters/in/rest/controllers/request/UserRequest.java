@@ -3,6 +3,8 @@ package com.co.unitravel.infrastructure.adapters.in.rest.controllers.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserRequest {
@@ -22,4 +24,6 @@ public class UserRequest {
     private Long cityId;
 
     private Integer documentTypeId;
+
+    private List<Long> rolIds;
 }

@@ -20,5 +20,7 @@ public interface UserUseCase {
     User getByAuthentication(String email, String password) throws NotFoundException;
     User getByEmail(String email) throws NotFoundException;
 
+    User update(User user) throws NotFoundException, JsonProcessingException;
+
 
 }

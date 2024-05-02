@@ -14,5 +14,9 @@ public interface RolPort {
 
     boolean existsByName(String name);
 
+    void existsById(Long id) throws NotFoundException;
+
     Rol update(Rol rol) throws NotFoundException;
+
+    List<Rol> findByIds(List<Long> ids);
 }
