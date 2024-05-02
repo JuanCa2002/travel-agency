@@ -7,18 +7,25 @@ import com.co.unitravel.application.exceptions.user.UserBusinessException;
 import com.co.unitravel.application.exceptions.user.UserErrorCodes;
 import com.co.unitravel.application.exceptions.user.UserNotFoundException;
 import com.co.unitravel.domain.models.DocumentType;
+import com.co.unitravel.domain.models.Rol;
 import com.co.unitravel.domain.models.User;
+import com.co.unitravel.domain.models.UserRol;
 import com.co.unitravel.domain.models.enums.UserStatus;
 import com.co.unitravel.infrastructure.ports.in.user.UserUseCase;
 import com.co.unitravel.infrastructure.ports.out.client.in.CityInClientPort;
 import com.co.unitravel.infrastructure.ports.out.documenttype.DocumentTypePort;
+import com.co.unitravel.infrastructure.ports.out.rol.RolPort;
 import com.co.unitravel.infrastructure.ports.out.user.UserPort;
+import com.co.unitravel.infrastructure.ports.out.userrol.UserRolPort;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +37,11 @@ public class UserUseImpl implements UserUseCase {
 
     private final CityInClientPort cityInClientPort;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    private final UserRolPort userRolPort;
+
+    private final RolPort rolPort;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessException.class, NotFoundException.class})
     @Override
     public User create(User user) throws NotFoundException, BusinessException, JsonProcessingException {
         DocumentType documentType = documentTypePort.findById(user.getDocumentType().getId());
@@ -47,7 +58,10 @@ public class UserUseImpl implements UserUseCase {
         user.setId(null);
         user.setStatus(UserStatus.ACTIVO);
         user.setDocumentType(documentType);
-        return userPort.save(user);
+        User savedUser = userPort.save(user);
+        List<UserRol> savedUserRolList = userRolPort.saveAll(getUserRolList(user.getRolList(), savedUser));
+        savedUser.setRolList(rolPort.findByIds(getRolIds(savedUserRolList)));
+        return savedUser;
     }
 
     @Transactional(readOnly = true)
@@ -97,5 +111,41 @@ public class UserUseImpl implements UserUseCase {
     @Override
     public User getByEmail(String email) throws NotFoundException {
         return userPort.findByEmail(email);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessException.class, NotFoundException.class})
+    @Override
+    public User update(User user) throws NotFoundException, JsonProcessingException {
+        UserNotFoundException errorNotFound = new UserNotFoundException();
+        errorNotFound.addError(GeneralApiErrorCodes.CITY_NOT_FOUND, new Object[]{user.getCityId()});
+        if(user.getCityId()!= null){
+            boolean validCity = cityInClientPort.findById(user.getCityId());
+            if(!validCity) throw  errorNotFound;
+        }
+        User updatedUser = new User();
+        updatedUser.setId(user.getId());
+        updatedUser.setCityId(user.getCityId());
+        updatedUser.setStatus(user.getStatus());
+        updatedUser.setEmail(user.getEmail());
+        updatedUser.setPhoneNumber(user.getPhoneNumber());
+        return userPort.update(updatedUser);
+    }
+
+    private List<UserRol> getUserRolList(List<Rol> rolList, User user) throws NotFoundException {
+        List<UserRol> userRolList = new ArrayList<>(rolList.size());
+        for (Rol rol: rolList){
+            UserRol userRol = new UserRol();
+            rolPort.existsById(rol.getId());
+            userRol.setRol(rol);
+            userRol.setUser(user);
+            userRolList.add(userRol);
+        }
+        return userRolList;
+    }
+
+    private List<Long> getRolIds(List<UserRol> userRolList){
+        return userRolList.stream()
+                .map(userRol -> userRol.getRol().getId())
+                .toList();
     }
 }

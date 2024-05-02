@@ -10,4 +10,8 @@ public interface RolRepository extends JpaRepository<RolEntity, Long> {
     @Query("SELECT CASE WHEN COUNT(R) > 0 THEN TRUE ELSE FALSE END " +
             "FROM RolEntity R WHERE R.name = UPPER(:name)")
     boolean existsByName(@Param("name") String name);
+
+    @Query("SELECT CASE WHEN COUNT(R) > 0 THEN TRUE ELSE FALSE END " +
+            "FROM RolEntity R WHERE R.id = :id")
+    boolean existsById(@Param("id") Long id);
 }

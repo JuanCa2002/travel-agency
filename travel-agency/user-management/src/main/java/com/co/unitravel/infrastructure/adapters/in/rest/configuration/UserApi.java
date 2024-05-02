@@ -4,6 +4,7 @@ import com.co.unitravel.application.exceptions.general.BusinessException;
 import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.RolUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.UserRequest;
+import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.UserUpdateRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.DocumentTypeResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.RolResponse;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.UserResponse;
@@ -26,6 +27,10 @@ public interface UserApi {
     @Operation(summary = "Find an user by id", description = "Find user by its id", tags = {"user"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found user", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class)))})
     ResponseEntity<UserResponse> findById(@PathVariable Long id) throws NotFoundException;
+
+    @Operation(summary = "Update an user by id", description = "Update user by its id", tags = {"user"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated status", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class)))})
+    ResponseEntity<UserResponse> update(@RequestBody UserUpdateRequest userUpdateRequest) throws NotFoundException, JsonProcessingException;
 
     @Operation(summary = "Update an user status", description = "Update user status by its id", tags = {"user"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Updated status", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class)))})
