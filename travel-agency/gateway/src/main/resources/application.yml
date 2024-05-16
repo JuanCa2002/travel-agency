@@ -22,6 +22,27 @@ spring:
           uri: lb://user-management
           predicates:
             - Path=/api/v1/user-management/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/travel-agency
+          jwk-set-uri: http://localhost:9090/realms/travel-agency/protocol/openid-connect/certs
+    output:
+      ansi:
+        enabled: always
+
+jwt:
+  auth:
+    converter:
+      resource-id: springboot-keycloak-client
+      principal-attribute: preferred_username
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 
 eureka:
   client:

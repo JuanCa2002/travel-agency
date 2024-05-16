@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 public interface AccommodationApi {
 
     @Operation(summary = "Create new accommodation", description = "Add a new accommodation", tags = {"accommodation"})

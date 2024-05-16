@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 public interface RolApi {
     @Operation(summary = "Create new rol", description = "Add a new rol", tags = {"rol"})
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "New rol added successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RolResponse.class)))})

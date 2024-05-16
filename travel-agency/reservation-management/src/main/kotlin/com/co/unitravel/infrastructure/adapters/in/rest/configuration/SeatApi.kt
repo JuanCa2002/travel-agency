@@ -3,7 +3,6 @@ package com.co.unitravel.infrastructure.adapters.`in`.rest.configuration
 import com.co.unitravel.domain.models.enums.SeatClass
 import com.co.unitravel.domain.models.enums.SeatStatus
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.SeatRequest
-import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.request.SeatUpdateRequest
 import com.co.unitravel.infrastructure.adapters.`in`.rest.controllers.response.SeatResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -11,12 +10,13 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
-
+@SecurityRequirement(name = "bearerAuth")
 interface SeatApi {
 
     @Operation(
