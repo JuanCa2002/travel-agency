@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 public interface DestinationApi {
     @Operation(summary = "Create new destination", description = "Add a new destination", tags = {"destination"})
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "New destination added successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DestinationResponse.class)))})

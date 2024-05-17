@@ -4,8 +4,20 @@ volumes:
   mysql_database_accommodation:
   mysql_database_reservation:
   mysql_database_user:
+  keycloak_data:
 
 services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.0.2
+    ports:
+      - "9090:9090"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - keycloak_data:/opt/keycloak/data/
+    command: [ "start-dev", "--http-port=9090" ]
+
   mysql_database_accommodation:
     image: mysql:8.0.34
     volumes:
@@ -50,6 +62,8 @@ services:
       - "2208:2208"
     environment:
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.security.oauth2.resourceserver.jwt.issuer-uri: http://keycloak:9090/realms/travel-agency
+      spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://keycloak:9090/realms/travel-agency/protocol/openid-connect/certs
     links:
       - eureka-server
 
@@ -98,6 +112,19 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+    links:
+      - eureka-server
+
+  authentication:
+    image: travel_authentication
+    build: ./authentication-management
+    restart: always
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.security.oauth2.resourceserver.jwt.issuer-uri: http://keycloak:9090/realms/travel-agency
+      keycloack.admin-url: http://keycloak:9090/admin/realms/travel-agency
     links:
       - eureka-server
 
