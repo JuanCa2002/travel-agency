@@ -1,0 +1,49 @@
+server:
+  port: 0
+
+springdoc:
+  webflux:
+    base-path: /api/v1/authentication-management
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    path: /swagger.v1+json
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/travel-agency
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+  application:
+    name: authentication-management
+    version: v1
+  rabbitmq:
+    host: rabbitmq
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+request-mapping:
+  controller:
+    authentication: authentication
+
+keycloak:
+  admin-url: http://localhost:9090/admin/realms/travel-agency
+  realm: travel-agency
+
+jwt:
+  auth:
+    converter:
+      resource-id: springboot-keycloak-client
+      principal-attribute: preferred_username

@@ -115,6 +115,19 @@ services:
     links:
       - eureka-server
 
+  authentication:
+    image: travel_authentication
+    build: ./authentication-management
+    restart: always
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.security.oauth2.resourceserver.jwt.issuer-uri: http://keycloak:9090/realms/travel-agency
+      keycloack.admin-url: http://keycloak:9090/admin/realms/travel-agency
+    links:
+      - eureka-server
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq

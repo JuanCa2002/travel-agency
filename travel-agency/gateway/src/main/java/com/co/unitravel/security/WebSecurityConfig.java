@@ -55,6 +55,7 @@ public class WebSecurityConfig {
                                 .pathMatchers("/api/v1/user-management/**").hasAnyRole(ADMIN, USER)
                                 .pathMatchers("/api/v1/accommodation-management/**").hasRole(ADMIN)
                                 .pathMatchers("/api/v1/reservation-management/**").hasRole(USER)
+                                .pathMatchers("/api/v1/authentication-management/**").permitAll()
                                 .anyExchange().authenticated());
 
         http.oauth2ResourceServer()

@@ -22,6 +22,10 @@ spring:
           uri: lb://user-management
           predicates:
             - Path=/api/v1/user-management/**
+        - id: authentication-management
+          uri: lb://authentication-management
+          predicates:
+            - Path=/api/v1/authentication-management/**
   security:
     oauth2:
       resourceserver:
