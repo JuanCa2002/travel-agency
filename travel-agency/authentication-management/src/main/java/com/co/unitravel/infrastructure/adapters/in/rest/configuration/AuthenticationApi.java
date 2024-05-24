@@ -1,6 +1,7 @@
 package com.co.unitravel.infrastructure.adapters.in.rest.configuration;
 
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.LoginRequest;
+import com.co.unitravel.infrastructure.adapters.in.rest.controllers.request.RefreshTokenRequest;
 import com.co.unitravel.infrastructure.adapters.in.rest.controllers.response.TokenResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,4 +17,8 @@ public interface AuthenticationApi {
     @Operation(summary = "Login on the application", description = "Login to get authentication token", tags = {"login"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Token generated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenResponse.class)))})
     ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest);
+
+    @Operation(summary = "Refresh token on the application", description = "Refresh the current token", tags = {"login"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Token refreshed correctly", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenResponse.class)))})
+    ResponseEntity<TokenResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest);
 }
