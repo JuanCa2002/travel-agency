@@ -21,6 +21,7 @@
 		<module>reservation-management</module>
         <module>user-management</module>
         <module>authentication-management</module>
+        <module>config</module>
     </modules>
 	<properties>
 		<java.version>17</java.version>

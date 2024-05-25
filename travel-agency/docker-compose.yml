@@ -138,3 +138,11 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  config:
+    image: travel_config
+    build: ./config
+    restart: always
+    depends_on:
+      - eureka-server
+      - reservation
