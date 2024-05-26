@@ -14,6 +14,8 @@ public class User implements Serializable {
 
    private Boolean enabled;
 
+   private String token;
+
    private String firstName;
 
    private String lastName;

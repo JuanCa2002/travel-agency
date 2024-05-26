@@ -12,13 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +25,7 @@ public class UserController implements UserApi {
 
     @PostMapping
     @Override
-    public ResponseEntity<UserResponse> save(UserRequest userRequest) throws BusinessException, NotFoundException, JsonProcessingException {
+    public ResponseEntity<UserResponse> save(UserRequest userRequest, String token) throws BusinessException, NotFoundException, JsonProcessingException {
         var response = userUseCase.create(userMapperApi.requestToDomain(userRequest));
         return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.CREATED);
     }
