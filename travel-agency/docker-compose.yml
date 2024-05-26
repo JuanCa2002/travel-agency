@@ -79,6 +79,7 @@ services:
     build: ./accommodation-management
     restart: always
     depends_on:
+      - config
       - mysql_database_accommodation
       - eureka-server
       - rabbitmq
@@ -87,8 +88,10 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.cloud.config.uri: http://config:8888
     links:
       - eureka-server
+      - config
 
   reservation:
     image: travel_reservation
@@ -114,6 +117,7 @@ services:
     build: ./user-management
     restart: always
     depends_on:
+      - config
       - mysql_database_user
       - eureka-server
       - rabbitmq
@@ -122,8 +126,10 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.cloud.config.uri: http://config:8888
     links:
       - eureka-server
+      - config
 
   authentication:
     image: travel_authentication
