@@ -39,7 +39,7 @@ request-mapping:
     authentication: authentication
 
 keycloak:
-  admin-url: http://localhost:9090/admin/realms/travel-agency
+  admin-url: http://keycloak:9090/admin/realms/travel-agency
   realm: travel-agency
 
 jwt:

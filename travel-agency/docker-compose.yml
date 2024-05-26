@@ -52,6 +52,13 @@ services:
     ports:
       - "8761:8761"
 
+  config:
+    image: travel_config
+    build: ./config
+    restart: always
+    ports:
+      - "8888:8888"
+
   api-gateway:
     image: travel_api_gateway
     build: ./gateway
@@ -72,6 +79,7 @@ services:
     build: ./accommodation-management
     restart: always
     depends_on:
+      - config
       - mysql_database_accommodation
       - eureka-server
       - rabbitmq
@@ -80,14 +88,17 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.cloud.config.uri: http://config:8888
     links:
       - eureka-server
+      - config
 
   reservation:
     image: travel_reservation
     build: ./reservation-management
     restart: always
     depends_on:
+      - config
       - mysql_database_reservation
       - eureka-server
       - rabbitmq
@@ -96,14 +107,17 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.cloud.config.uri: http://config:8888
     links:
       - eureka-server
+      - config
 
   user:
     image: travel_user
     build: ./user-management
     restart: always
     depends_on:
+      - config
       - mysql_database_user
       - eureka-server
       - rabbitmq
@@ -112,8 +126,10 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root1234
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.cloud.config.uri: http://config:8888
     links:
       - eureka-server
+      - config
 
   authentication:
     image: travel_authentication

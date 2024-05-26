@@ -1,0 +1,16 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/JuanCa2002/config-travel-agency
+          default-label: main
+          search-paths: configuration
+          username: JuanCa2002
+          password: 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
