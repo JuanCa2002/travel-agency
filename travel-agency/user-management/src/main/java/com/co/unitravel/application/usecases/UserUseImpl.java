@@ -47,7 +47,7 @@ public class UserUseImpl implements UserUseCase {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessException.class, NotFoundException.class})
     @Override
-    public User create(User user) throws NotFoundException, BusinessException, JsonProcessingException {
+    public User create(User user, String token) throws NotFoundException, BusinessException, JsonProcessingException {
         DocumentType documentType = documentTypePort.findById(user.getDocumentType().getId());
         UserBusinessException error = new UserBusinessException();
         error.addError(UserErrorCodes.USER_DOCUMENT_NUMBER_ALREADY_EXISTS, null);
@@ -65,7 +65,7 @@ public class UserUseImpl implements UserUseCase {
         User savedUser = userPort.save(user);
         List<UserRol> savedUserRolList = userRolPort.saveAll(getUserRolList(user.getRolList(), savedUser));
         savedUser.setRolList(rolPort.findByIds(getRolIds(savedUserRolList)));
-        UserKeycloak userKeycloak = userMapperApp.userToUserKeycloak(user);
+        UserKeycloak userKeycloak = userMapperApp.userToUserKeycloak(user, token);
         authenticationInClientPort.registerNewUser(userKeycloak);
         return savedUser;
     }

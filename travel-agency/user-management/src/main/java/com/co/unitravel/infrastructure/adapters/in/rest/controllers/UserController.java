@@ -26,7 +26,7 @@ public class UserController implements UserApi {
     @PostMapping
     @Override
     public ResponseEntity<UserResponse> save(UserRequest userRequest, String token) throws BusinessException, NotFoundException, JsonProcessingException {
-        var response = userUseCase.create(userMapperApi.requestToDomain(userRequest));
+        var response = userUseCase.create(userMapperApi.requestToDomain(userRequest),token);
         return new ResponseEntity<>(userMapperApi.domainToResponse(response), HttpStatus.CREATED);
     }
 
