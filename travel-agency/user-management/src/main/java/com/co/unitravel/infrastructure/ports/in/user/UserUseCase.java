@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface UserUseCase {
 
-    User create(User user) throws NotFoundException, BusinessException, JsonProcessingException;
+    User create(User user, String token) throws NotFoundException, BusinessException, JsonProcessingException;
 
     User getById(Long id) throws NotFoundException;
 

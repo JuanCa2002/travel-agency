@@ -6,12 +6,12 @@ import com.co.unitravel.application.exceptions.general.NotFoundException;
 import com.co.unitravel.application.exceptions.user.UserBusinessException;
 import com.co.unitravel.application.exceptions.user.UserErrorCodes;
 import com.co.unitravel.application.exceptions.user.UserNotFoundException;
-import com.co.unitravel.domain.models.DocumentType;
-import com.co.unitravel.domain.models.Rol;
-import com.co.unitravel.domain.models.User;
-import com.co.unitravel.domain.models.UserRol;
+import com.co.unitravel.application.mappers.UserMapperApp;
+import com.co.unitravel.domain.models.*;
 import com.co.unitravel.domain.models.enums.UserStatus;
+import com.co.unitravel.infrastructure.adapters.out.database.mappers.user.UserMapper;
 import com.co.unitravel.infrastructure.ports.in.user.UserUseCase;
+import com.co.unitravel.infrastructure.ports.out.client.in.AuthenticationInClientPort;
 import com.co.unitravel.infrastructure.ports.out.client.in.CityInClientPort;
 import com.co.unitravel.infrastructure.ports.out.documenttype.DocumentTypePort;
 import com.co.unitravel.infrastructure.ports.out.rol.RolPort;
@@ -41,9 +41,13 @@ public class UserUseImpl implements UserUseCase {
 
     private final RolPort rolPort;
 
+    private final UserMapperApp userMapperApp;
+
+    private final AuthenticationInClientPort authenticationInClientPort;
+
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {BusinessException.class, NotFoundException.class})
     @Override
-    public User create(User user) throws NotFoundException, BusinessException, JsonProcessingException {
+    public User create(User user, String token) throws NotFoundException, BusinessException, JsonProcessingException {
         DocumentType documentType = documentTypePort.findById(user.getDocumentType().getId());
         UserBusinessException error = new UserBusinessException();
         error.addError(UserErrorCodes.USER_DOCUMENT_NUMBER_ALREADY_EXISTS, null);
@@ -61,6 +65,8 @@ public class UserUseImpl implements UserUseCase {
         User savedUser = userPort.save(user);
         List<UserRol> savedUserRolList = userRolPort.saveAll(getUserRolList(user.getRolList(), savedUser));
         savedUser.setRolList(rolPort.findByIds(getRolIds(savedUserRolList)));
+        UserKeycloak userKeycloak = userMapperApp.userToUserKeycloak(user, token);
+        authenticationInClientPort.registerNewUser(userKeycloak);
         return savedUser;
     }
 

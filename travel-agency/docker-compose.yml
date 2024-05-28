@@ -87,6 +87,13 @@ services:
       spring.datasource.url: jdbc:mysql://mysql_database_accommodation:3306/accommodation?createDatabaseIfNotExist=true
       spring.datasource.username: root
       spring.datasource.password: root1234
+      spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+      spring.jpa.properties.hibernate.format_sql: true
+      spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+      spring.jpa.generate-ddl: false
+      spring.jpa.show-sql: true
+      spring.jpa.hibernate.ddl-auto: update
+      spring.jpa.database-platform: com.mysql.cj.jdbc.Driver
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
       spring.cloud.config.uri: http://config:8888
     links:
@@ -106,6 +113,13 @@ services:
       spring.datasource.url: jdbc:mysql://mysql_database_reservation:3306/reservation?createDatabaseIfNotExist=true
       spring.datasource.username: root
       spring.datasource.password: root1234
+      spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+      spring.jpa.properties.hibernate.format_sql: true
+      spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+      spring.jpa.generate-ddl: false
+      spring.jpa.show-sql: true
+      spring.jpa.hibernate.ddl-auto: update
+      spring.jpa.database-platform: com.mysql.cj.jdbc.Driver
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
       spring.cloud.config.uri: http://config:8888
     links:
@@ -125,6 +139,13 @@ services:
       spring.datasource.url: jdbc:mysql://mysql_database_reservation:3306/users?createDatabaseIfNotExist=true
       spring.datasource.username: root
       spring.datasource.password: root1234
+      spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+      spring.jpa.properties.hibernate.format_sql: true
+      spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
+      spring.jpa.generate-ddl: false
+      spring.jpa.show-sql: true
+      spring.jpa.hibernate.ddl-auto: update
+      spring.jpa.database-platform: com.mysql.cj.jdbc.Driver
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
       spring.cloud.config.uri: http://config:8888
     links:

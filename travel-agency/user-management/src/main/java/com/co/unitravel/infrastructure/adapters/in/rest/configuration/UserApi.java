@@ -16,12 +16,13 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @SecurityRequirement(name = "bearerAuth")
 public interface UserApi {
     @Operation(summary = "Create new user", description = "Add a new user", tags = {"user"})
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "New user added successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class)))})
-    ResponseEntity<UserResponse> save(@Valid @RequestBody UserRequest userRequest) throws BusinessException, NotFoundException, JsonProcessingException;
+    ResponseEntity<UserResponse> save(@Valid @RequestBody UserRequest userRequest, @RequestHeader("Authentication") String token) throws BusinessException, NotFoundException, JsonProcessingException;
 
     @Operation(summary = "Find an user by id", description = "Find user by its id", tags = {"user"})
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found user", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class)))})
