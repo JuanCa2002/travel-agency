@@ -56,6 +56,7 @@ public class UserUseImpl implements UserUseCase {
         boolean validCity = cityInClientPort.findById(user.getCityId());
         if(!validCity) throw  errorNotFound;
         if(userPort.existsByDocument(user.getDocumentNumber())) throw error;
+        String password = user.getPassword();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String hashedPassword = encoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
@@ -65,7 +66,8 @@ public class UserUseImpl implements UserUseCase {
         User savedUser = userPort.save(user);
         List<UserRol> savedUserRolList = userRolPort.saveAll(getUserRolList(user.getRolList(), savedUser));
         savedUser.setRolList(rolPort.findByIds(getRolIds(savedUserRolList)));
-        UserKeycloak userKeycloak = userMapperApp.userToUserKeycloak(user, token);
+        UserKeycloak userKeycloak = userMapperApp.userToUserKeycloak(user, token, password);
+        userKeycloak.setRealmRoles(getRolNames(rolPort.findByIds(getRolIds(savedUserRolList))));
         authenticationInClientPort.registerNewUser(userKeycloak);
         return savedUser;
     }
@@ -152,6 +154,12 @@ public class UserUseImpl implements UserUseCase {
     private List<Long> getRolIds(List<UserRol> userRolList){
         return userRolList.stream()
                 .map(userRol -> userRol.getRol().getId())
+                .toList();
+    }
+
+    private List<String> getRolNames(List<Rol> rolList){
+        return rolList.stream()
+                .map(rol -> rol.getName().toLowerCase())
                 .toList();
     }
 }

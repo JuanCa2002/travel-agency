@@ -24,6 +24,10 @@ public class AutheticationOutClientAdapter implements AuthenticationOutClientPor
         System.out.println("El usuario que llego fue: " + user.getFirstName());
         String bearerToken = "Bearer " + user.getToken();
         System.out.println("El token que llego fue " + bearerToken);
+        System.out.println("Uno de los roles que llego es: "+ user.getRealmRoles().get(0));
+        User userToSave = userMapper.responseToDomain(user);
+        userToSave.setRealmRoles(user.getRealmRoles());
+        System.out.println("Uno de los que hay para guardar es: "+ userToSave.getRealmRoles().get(0));
         userPort.registerUser(userMapper.responseToDomain(user), bearerToken);
     }
 }
