@@ -14,7 +14,7 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapperApp {
 
-    default UserKeycloak userToUserKeycloak(User user, String token) {
+    default UserKeycloak userToUserKeycloak(User user, String token, String password) {
         if(user == null){
             return null;
         }
@@ -28,7 +28,7 @@ public interface UserMapperApp {
         List<Credential> credentials = new ArrayList<>();
         Credential credential = new Credential();
         credential.setType("password");
-        credential.setValue("rollback");
+        credential.setValue(password);
         credential.setTemporary(false);
         credentials.add(credential);
         userKeycloak.setCredentials(credentials);

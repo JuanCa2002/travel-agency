@@ -18,6 +18,8 @@ public class UserResponse {
 
     private String lastName;
 
+    private List<String> realmRoles;
+
     private String email;
 
     private Boolean emailVerified;
