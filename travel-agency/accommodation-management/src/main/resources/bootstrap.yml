@@ -16,8 +16,18 @@ spring:
   application:
     name: accommodation-management
     version: v1
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: dev
   rabbitmq:
     host: rabbitmq
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   instance:
