@@ -99,6 +99,7 @@ services:
     links:
       - eureka-server
       - config
+    command: ["./wait-for-it.sh", "config:8888", "-t", "50", "--", "java", "-jar", "/accommodation-management.jar"]
 
   reservation:
     image: travel_reservation
@@ -125,6 +126,7 @@ services:
     links:
       - eureka-server
       - config
+    command: ["./wait-for-it.sh", "config:8888", "-t", "50", "--", "java", "-jar", "/reservation-management.jar"]
 
   user:
     image: travel_user
@@ -151,6 +153,7 @@ services:
     links:
       - eureka-server
       - config
+    command: ["./wait-for-it.sh", "config:8888", "-t", "50", "--", "java", "-jar", "/user-management.jar"]
 
   authentication:
     image: travel_authentication

@@ -42,6 +42,27 @@ open class AmqpConfig {
     }
 
     @Bean
+    fun accommodationReservationQueuePrice(): Queue {
+        return Queue(AmqpConfigurationConstants.ACCOMMODATION_QUEUE_PRICE)
+    }
+
+    @Bean
+    fun accommodationReservationPriceBinding(@Qualifier("accommodationReservationQueuePrice") queue: Queue?, exchange: TopicExchange?): Binding {
+        return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.ACCOMMODATION_PRICE_ROUTING_KEY)
+    }
+
+    @Bean
+    fun accommodationReservationQueueCapacity(): Queue {
+        return Queue(AmqpConfigurationConstants.ACCOMMODATION_QUEUE_CAPACITY)
+    }
+
+    @Bean
+    fun accommodationReservationCapacityBinding(@Qualifier("accommodationReservationQueueCapacity") queue: Queue?, exchange: TopicExchange?): Binding {
+        return BindingBuilder.bind(queue).to(exchange).with(AmqpConfigurationConstants.ACCOMMODATION_CAPACITY_ROUTING_KEY)
+    }
+
+
+    @Bean
     open fun exchange(): TopicExchange {
         return TopicExchange(AmqpConfigurationConstants.EXCHANGE)
     }

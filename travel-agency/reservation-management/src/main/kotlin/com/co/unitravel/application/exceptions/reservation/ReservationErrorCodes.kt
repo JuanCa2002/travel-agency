@@ -11,4 +11,6 @@ object ReservationErrorCodes {
     const val RESERVATION_INVALID_DATES = "com.co.travel.application.exceptions.reservation.ReservationErrorCodes.RESERVATION_INVALID_DATES"
 
     const val RESERVATION_INVALID_DATE_TIME = "com.co.travel.application.exceptions.reservation.ReservationErrorCodes.RESERVATION_INVALID_DATE_TIME"
+
+    const val ACCOMMODATION_CAPACITY_LESS_THAN_RESERVATION_PEOPLE = "com.co.travel.application.exceptions.reservation.ReservationErrorCodes.ACCOMMODATION_CAPACITY_LESS_THAN_RESERVATION_PEOPLE"
 }

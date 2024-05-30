@@ -62,8 +62,8 @@ public class WebSecurityConfig {
                                 .pathMatchers(HttpMethod.GET,"/api/v1/accommodation-management/accommodation/administrator/**").hasAnyRole(ADMIN_ACCOMMODATION)
                                 .pathMatchers("/api/v1/accommodation-management/accommodation/**").hasRole(ADMIN_ACCOMMODATION)
                                 .pathMatchers("/api/v1/accommodation-management/**").hasRole(ADMIN)
-                                .pathMatchers("/api/v1/reservation-management/**").hasRole(ADMIN)
                                 .pathMatchers("/api/v1/reservation-management/reservation/**").hasAnyRole(ADMIN, USER)
+                                .pathMatchers("/api/v1/reservation-management/**").hasRole(ADMIN)
                                 .pathMatchers("/api/v1/authentication-management/**").permitAll()
                                 .anyExchange().authenticated());
 

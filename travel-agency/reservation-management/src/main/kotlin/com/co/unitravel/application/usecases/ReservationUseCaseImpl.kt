@@ -41,6 +41,13 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
             errorNotFound.addError(GeneralApiErrorCodes.ACCOMMODATION_NOT_FOUND, arrayOf(reservation.accommodationId!!))
             throw errorNotFound
         }
+        val price = accommodationInClientPort.findPrice(reservation.accommodationId!!);
+        val maximumCapacity = accommodationInClientPort.findMaximumCapacity(reservation.accommodationId!!)
+        println("La maxima capacidad es :$maximumCapacity")
+        if(maximumCapacity < reservation.numberPeople!!){
+            error.addError(ReservationErrorCodes.ACCOMMODATION_CAPACITY_LESS_THAN_RESERVATION_PEOPLE, arrayOf(maximumCapacity, reservation.numberPeople!!))
+            throw error
+        }
         val checkInDate = reservation.checkInDate
         val checkOutDate = reservation.checkOutDate
         if(checkInDate!!.isAfter(checkOutDate) or checkInDate.isEqual(checkOutDate)){
@@ -54,7 +61,7 @@ open class ReservationUseCaseImpl(private val reservationPort: ReservationPort,
         reservation.id = null
         reservation.flight = flight
         reservation.reservationDate = LocalDate.now()
-        reservation.finalPrice = finalPrice
+        reservation.finalPrice = finalPrice + (price * reservation.numberPeople!!)
         reservation.reservationStatus = ReservationStatus.PENDIENTE
         return reservationPort.save(reservation)
     }

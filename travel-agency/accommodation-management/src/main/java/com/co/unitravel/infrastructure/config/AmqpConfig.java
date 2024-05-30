@@ -48,6 +48,34 @@ public class AmqpConfig {
     }
 
     @Bean
+    public Queue accommodationReservationQueuePrice() {
+        return new Queue(AmqpConfigurationConstants.ACCOMMODATION_QUEUE_PRICE);
+    }
+
+    @Bean
+    public Binding accommodationReservationPriceBinding(
+            @Qualifier("accommodationReservationQueuePrice") Queue queue,
+            TopicExchange exchange) {
+        return BindingBuilder.bind(queue)
+                .to(exchange)
+                .with(AmqpConfigurationConstants.ACCOMMODATION_PRICE_ROUTING_KEY);
+    }
+
+    @Bean
+    public Queue accommodationReservationQueueCapacity() {
+        return new Queue(AmqpConfigurationConstants.ACCOMMODATION_QUEUE_CAPACITY);
+    }
+
+    @Bean
+    public Binding accommodationReservationCapacityBinding(
+            @Qualifier("accommodationReservationQueueCapacity") Queue queue,
+            TopicExchange exchange) {
+        return BindingBuilder.bind(queue)
+                .to(exchange)
+                .with(AmqpConfigurationConstants.ACCOMMODATION_CAPACITY_ROUTING_KEY);
+    }
+
+    @Bean
     public TopicExchange exchange() {
         return new TopicExchange(AmqpConfigurationConstants.EXCHANGE);
     }
