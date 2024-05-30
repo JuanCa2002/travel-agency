@@ -43,10 +43,16 @@ public class AccommodationEntity {
     private String photosUrls;
 
     @Column(name = "rating", nullable = false)
-    private Integer rating;
+    private Double rating;
+
+    @Column(name = "numberVotes", nullable = false)
+    private Integer numberVotes;
 
     @Column(name = "maximumCapacity", nullable = false)
     private Integer maximumCapacity;
+
+    @Column(name = "summationVotes", nullable = false)
+    private Double summationVotes;
 
     @Column(name = "price", nullable = false)
     private Integer price;

@@ -20,7 +20,7 @@ public class AccommodationResponse {
 
     private String photosUrls;
 
-    private Integer rating;
+    private Double rating;
 
     private Integer maximumCapacity;
 

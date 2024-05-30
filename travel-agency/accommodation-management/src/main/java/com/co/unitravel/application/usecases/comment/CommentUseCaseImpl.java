@@ -48,7 +48,11 @@ public class CommentUseCaseImpl implements CommentUseCase {
             comment.setComment(foundComment);
         }
         comment.setId(null);
-        comment.setAccommodation(accommodation);
+        accommodation.setNumberVotes(accommodation.getNumberVotes()+1);
+        accommodation.setSummationVotes(accommodation.getSummationVotes()+ comment.getQualification());
+        accommodation.setRating(accommodation.getSummationVotes() / (double) accommodation.getNumberVotes());
+        Accommodation accommodationUpdate = accommodationPort.update(accommodation);
+        comment.setAccommodation(accommodationUpdate);
         comment.setCommentStatus(CommentStatus.ACTIVO);
         comment.setCommentDate(LocalDate.now());
         comment.setCommentTime(LocalTime.now());

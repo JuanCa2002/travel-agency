@@ -20,7 +20,11 @@ public class Accommodation {
 
     private String photosUrls;
 
-    private Integer rating;
+    private Double rating;
+
+    private Integer numberVotes;
+
+    private Double summationVotes;
 
     private Integer maximumCapacity;
 
