@@ -21,8 +21,6 @@ public class AccommodationUpdateRequest {
 
     private String photosUrls;
 
-    private Integer rating;
-
     private Integer maximumCapacity;
 
     private Integer price;

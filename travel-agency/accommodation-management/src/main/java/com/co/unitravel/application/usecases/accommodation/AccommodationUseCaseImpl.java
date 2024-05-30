@@ -40,7 +40,9 @@ public class AccommodationUseCaseImpl implements AccommodationUseCase {
         accommodation.setDestination(destination);
         accommodation.setAccommodationStatus(AccommodationStatus.ACTIVO);
         accommodation.setId(null);
-        accommodation.setRating(0);
+        accommodation.setRating(0.0);
+        accommodation.setSummationVotes(0.0);
+        accommodation.setNumberVotes(0);
         return accommodationPort.save(accommodation);
     }
 

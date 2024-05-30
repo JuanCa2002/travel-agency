@@ -27,6 +27,8 @@ public class Comment {
 
     private LocalTime commentEditTime;
 
+    private Double qualification;
+
     private CommentType commentType;
 
     private Comment comment;
